@@ -2,42 +2,48 @@
 #include <string>
 using namespace std;
 
-/*void displayGameIntro();*/
 void basicConcepts();
 void conditionals();
 void controlFlow();
 void question_And_Answer(string questionAns[][2], string your_answers[], int qa_length, int anslength, int *score);
 void show_lectures(string lectures[][5], int l_length, int l_slength);
 int score;
+
+
 int main()
 {   string choice;
 
 
-
+    do{
+    system("cls");
     cout<<"\n\n\t\t\t\t=======================================================\n\n"<<endl;
     cout<<"\t\t\t\t\t\t   "<<" C++ CHALLENGE\n\n"<<endl;
     cout<<"\t\t\t\t=======================================================\n"<<endl;
     cout << "\t\t\t\t\t  "<<"WELCOME TO FUNDAMENTALS OF C++" << endl;
 
-    do{
+        while(1){
         cout<<"\n\n\t\tAVAILABLE TOPICS: BASIC CONCEPTS(1), CONDITIONALS(2), CONTROL FLOW(3)";
         cout<<"\n\n\t\tEnter choice(1-3): ";
         cin>>choice;
 
         if(choice=="1"){
             basicConcepts();
+            break;
         }
 
         else if(choice=="2"){
             conditionals();
+            break;
         }
 
         else if(choice=="3"){
             controlFlow();
+            break;
         }
         else {
             cout<<"\n\n\t\tInvalid Choice\n\n";
 
+        }
         }
 
 
@@ -126,17 +132,18 @@ int main()
 
 
         do{
-            cout<<"\n\n\t\tQuiz(1) or Lecture(2)?: ";
+            cout<<"\n\n\t\tLecture(1) or Quiz(2)?: ";
             cin>>yes_no;
 
             if(yes_no=="1"){
-            system("cls");
-            question_And_Answer(questionAns, your_answers, qa_length, anslength, &score);
-            cout<<"\n\t\tYour Score is "<<score<<"/10\n\n";
+                system("cls");
+                show_lectures(lectures, l_length, l_slength);
             }
 
             else if(yes_no=="2"){
-               show_lectures(lectures, l_length, l_slength);
+                system("cls");
+                question_And_Answer(questionAns, your_answers, qa_length, anslength, &score);
+
             }
 
             else{
@@ -217,18 +224,19 @@ void conditionals(){
         string your_answers[10];
         anslength=sizeof(your_answers)/sizeof(your_answers[0]);
 
-        do{
-            cout<<"\n\n\t\tQuiz(1) or Lecture(2)?: ";
+       do{
+            cout<<"\n\n\t\tLecture(1) or Quiz(2)?: ";
             cin>>yes_no;
 
             if(yes_no=="1"){
-            system("cls");
-            question_And_Answer(questionAns, your_answers, qa_length, anslength, &score);
-            cout<<"\n\t\tYour Score is "<<score<<"/10\n\n";
+                system("cls");
+                show_lectures(lectures, l_length, l_slength);
             }
 
             else if(yes_no=="2"){
-               show_lectures(lectures, l_length, l_slength);
+                system("cls");
+                question_And_Answer(questionAns, your_answers, qa_length, anslength, &score);
+                cout<<"\n\t\tYour Score is "<<score<<"/10\n\n";
             }
 
             else{
@@ -303,17 +311,18 @@ void controlFlow(){
         anslength=sizeof(your_answers)/sizeof(your_answers[0]);
 
         do{
-            cout<<"\n\n\t\tQuiz(1) or Lecture(2)?: ";
+            cout<<"\n\n\t\tLecture(1) or Quiz(2)?: ";
             cin>>yes_no;
 
             if(yes_no=="1"){
-            system("cls");
-            question_And_Answer(questionAns, your_answers, qa_length, anslength, &score);
-            cout<<"\n\t\tYour Score is "<<score<<"/10\n\n";
+                system("cls");
+                show_lectures(lectures, l_length, l_slength);
             }
 
             else if(yes_no=="2"){
-               show_lectures(lectures, l_length, l_slength);
+                system("cls");
+                question_And_Answer(questionAns, your_answers, qa_length, anslength, &score);
+                cout<<"\n\t\tYour Score is "<<score<<"/10\n\n";
             }
 
             else{
@@ -324,6 +333,8 @@ void controlFlow(){
 
 void question_And_Answer(string questionAns[][2], string your_answers[], int qa_length, int anslength, int *score) {
     *score=0;
+    string reset;
+    string next;
     for (int i = 0; i < qa_length; i++) {
         system("cls");
         cout << questionAns[i][0];
@@ -335,16 +346,41 @@ void question_And_Answer(string questionAns[][2], string your_answers[], int qa_
             }
         } while (ans.length() != 1 || ans==""|| (ans != "a" && ans != "b" && ans != "c"));
 
+
         your_answers[i] = ans;
-    }
-      for(int m=0; m<anslength; m++)
-        {
-            if (your_answers[m]==questionAns[m][1]){
-                (*score)++;
+
+
+        if (your_answers[i]==questionAns[i][1]){
+            cout<<"\n\n\t\tCorrect\n\n";
+            (*score)++;
             }
 
+        else{
+            cout<<"\n\n\t\tWrong, The answer is "<<questionAns[i][1]<<"\n\n";
+            }
+
+        do{
+            cout<<"\n\n\t\tNext? Press 1\n\n\t\t";
+            cin>>next;
+            if(next!="1"){
+                cout<<"\n\n\t\tTry Again\n\n\t\t";
+            }
+        }while(next!="1");
+    }
+    cout<<"\n\t\tYour Score is "<<*score<<"/10\n\n";
+
+    do{
+        cout<<"\n\n\t\tPress 1 to exit\n\n\t\t";
+        cin>>reset;
+
+        if(reset!="1"){
+            cout<<"\n\n\t\tTry again\n\n\t\t";
+        }
+        else{
+            system("cls");
         }
 
+    }while(reset!="1");
 }
 
 
