@@ -19,38 +19,26 @@ int main()
     cout<<"\t\t\t\t=======================================================\n"<<endl;
     cout << "\t\t\t\t\t  "<<"WELCOME TO FUNDAMENTALS OF C++" << endl;
 
-do{
-    cout<<"\n\n\t\tAVAILABLE TOPICS: BASIC CONCEPTS(1), CONDITIONALS(2), CONTROL FLOW(3)";
-    cout<<"\n\n\t\tEnter choice(1-3): ";
-    cin>>choice;
-        /*switch(choice){
-        case '1': basicConcepts();
-                break;
-        case '2': conditionals();
-                break;
-        case '3': controlFlow();
-                break;
+    do{
+        cout<<"\n\n\t\tAVAILABLE TOPICS: BASIC CONCEPTS(1), CONDITIONALS(2), CONTROL FLOW(3)";
+        cout<<"\n\n\t\tEnter choice(1-3): ";
+        cin>>choice;
 
-        default: cout<<"\n\t\t\t\tINVALID CHOICE\n\n";
-    }*/
+        if(choice=="1"){
+            basicConcepts();
+        }
 
+        else if(choice=="2"){
+            conditionals();
+        }
 
+        else if(choice=="3"){
+            controlFlow();
+        }
+        else {
+            cout<<"\n\n\t\tInvalid Choice\n\n";
 
-    if(choice=="1"){
-        basicConcepts();
-    }
-
-    else if(choice=="2"){
-        conditionals();
-    }
-
-    else if(choice=="3"){
-        controlFlow();
-    }
-    else {
-        cout<<"\n\n\t\tInvalid Choice\n\n";
-
-    }
+        }
 
 
     }while(choice.length()==1|| choice!="1" && choice!="2" && choice!="3");
@@ -66,8 +54,8 @@ do{
         string lectures[][5]= {
             {"\n\n\t\tWELCOME TO C++\n\t\tC++ is one of the most popular programming languages.\n\t\tIt is used to build games, operating system, browsers, and much more.",
             "\n\n\t\tOutput\n\t\tCoders use output all the time to check the computer if its following the given instruction\n\t\tex: cout<<\"Welcome to c++\";\n",
-            "\n\n\t\tStatements\n\t\tA line of code is called a statement\n\t\tA statement performs a specific task.\n\t\tex: cout<<\"Coding is an art\";\n\t\t#displays Coding is an art in the console\n",
-            "\n\n\t\tSemicolon\n\t\tEach statements in c++ ends width a semicolon ;\n\t\tcout<<\"I love C++\" #returns an error due to no semicolon\n",
+            "\n\n\t\tStatements\n\t\tA line of code is called a statement\n\t\tA statement performs a specific task.\n\t\tex: cout<<\"Coding is an art\";\n\t\t//displays Coding is an art in the console\n",
+            "\n\n\t\tSemicolon\n\t\tEach statements in c++ ends width a semicolon ;\n\t\tcout<<\"I love C++\" //returns an error due to no semicolon\n",
             "\n\n\t\tOutputting a text\n\t\tWhen printing text outputs you need to enclose the text in double qoutes\n\t\tcout<<\"C++ is super easy\";\n\n\t\tText VS Numbers\n\t\tComputers treat numbers and text differently.\n\t\tNumber dont need qoutes when you want to output them\n\t\tcout<<42; #displays 42 in the console\n"},
 
             {"\n\n\t\tC++ STRUCTURE\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main(){\n\t\t  cout<<\"Hello World\";\n\t\t}",
@@ -166,30 +154,37 @@ void conditionals(){
         string yes_no;
         string ans;
         string lectures[][5]= {
-            {"\n\t\tC++ is programmming language use for kuana?:\n\n\t\t\ta.yes  b.no  c.bawlang\n",
+            {"\n\n\n\t\tTAKING INPUTS\n\n\t\t-Your program may take user input for an application to process and generate output\n\n\t\t-To take input, use cin>> command\n\n\t\t-We first declare the variable that will hold our input value, then we use cin>>command\n\n\t\tint age;\n\t\tcin>>age; //for example you type 23\n\t\tcout<<age; /displays 23\n",
+            "\n\n\t\tAnother Example:\n\n\t\tstring name;\n\t\tcout<<\"Enter name \";\n\t\tcin>>name; //lets assume you type Lemuel\n\t\tcout<<\"You entered: \"<<name; //displays You entered Lemuel\n",
+            "\n\n\t\tMultiple Inputs\n\n\t\tYou can take multiple inputs throughout your program\n\n\t\tint a, b;\n\t\tcin>>a; //assume you type 3\n\t\tcin>>b; //assume you type 10;\n\t\tcout<< a+b; //displays 13\n",
+            "\n\n\t\tCan you guess the output?\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main(){\n\n\t\tstring name;\n\t\tint age;\n\n\t\tcout<<\"Enter name: \";// assume you type Guko\n\t\tcin>>name;\n\n\t\tcout<<\"Enter age: \"; // assume you type 34\n\n\t\tcout<<\"You are \"<<name<<\" \"<<age<<\" years old\";\n\n\t\treturn 0;\n\n\t\t}\n",
+            "\n\n\t\tCan you guess the output?\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main(){\n\n\t\tstring name;\n\t\tint age;\n\n\t\tcout<<\"Enter name: \";// assume you type Guko\n\t\tcin>>name;\n\n\t\tcout<<\"Enter age: \"; // assume you type 34\n\n\t\tcout<<\"You are \"<<name<<\" \"<<age<<\" years old\"; //displays \"You are Guko 34 years old\"\n\n\t\treturn 0;\n\n\t\t}\n"
+            },
+
+
+            {"\n\n\n\t\tCONDITIONAL STATEMENTS\n\n\t\t-Are used to perform different actions based on different conditions\n\n\t\t",
+            "\n\n\t\tIF STATEMENT\n\n\t\t-The if statements allows you to run a specified code if a given condition is true\n\n\t\tHere is the syntax\n\n\t\tif(condition){\n\t\t//code to run\n\t\t}",
+            "\n\n\t\tCOMPARISON OPERATORS\n\n\t\t-The following are comparison operators may be used to form the conditions\n\n\t\t< -less than\n\n\t\t> -greater than\n\n\t\t!= -not equal to\n\n\t\t== -equal to\n\n\t\t< -less than or equal to\n\n\t\t>= -greater than or equal to\n\n\t\tExamples\n\n\t\tint grade=80;\n\t\tif(grade > 75){\n\n\t\tcout<<\"You pass\"; //displays \"You pass\", since the condition is true, 80 is greater than 75\n\n\t\t}",
+            "\n\n\t\tCan you guess the output?\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main(){\n\n\t\t int day=7;\n\n\t\t if(day==7){\n\t\t cout<<\"Sunday\";\n\n\t\t}\n\n\t\t return 0;\n\n\t\t}\n",
+            "\n\n\t\tCan you guess the output?\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main(){\n\n\t\t int day=7;\n\n\t\t if(day==7){\n\t\t cout<<\"Sunday\"; //displays \"Sunday\" since day is equals to 7\n\n\t\t}\n\n\t\t return 0;\n\n\t\t}\n"
+            },
+
+
+            {"\n\n\n\t\tELSE STATEMENT\n\n\t\t-You can use the else statement after an if statement\n\t\tIf you want to run a code in case the condition is false\n\n\t\tSyntax:\n\n\t\tif(condition){\n\t\t//code to run\n\t\t}\n\n\t\telse{\n\t\t//code to run\n\t\t}\n",
+            "\n\n\t\tExample:\n\n\t\tint grade = 60\n\t\tif(age >= 75{\n\t\t cout<<\"You passed\";\n\t\t}\n\n\t\telse{\n\t\tcout<<\"You failed \"; //displays \"You failed\" since grade(52) is not greater than or equal to 75\n\t\t}",
+            "",
+            "",
+            ""
+            },
+
+            {"\n\n\n\t\t",
             "",
             "",
             "",
             ""
             },
 
-
-            {"\n\t\tC++ is programmming language use for kuana?:\n\n\t\t\ta.yes  b.no  c.bawlang\n",
-            "",
-            "",
-            "",
-            ""
-            },
-
-
-            {"\n\t\tC++ is programmming language use for kuana?:\n\n\t\t\ta.yes  b.no  c.bawlang\n",
-            "",
-            "",
-            "",
-            ""
-            },
-
-            {"\n\t\tC++ is programmming language use for kuana?:\n\n\t\t\ta.yes  b.no  c.bawlang\n",
+             {"\n\n\n\t\t",
             "",
             "",
             "",
@@ -253,7 +248,7 @@ void controlFlow(){
         string yes_no;
         string ans;
         string lectures[][5]={
-            {"\n\t\tC++ is programmming language use for kuana?:\n\n\t\t\ta.yes  b.no  c.bawlang\n",
+            {"\n\t\t,"
             "",
             "",
             "",
@@ -261,7 +256,7 @@ void controlFlow(){
             },
 
 
-            {"\n\t\tC++ is programmming language use for kuana?:\n\n\t\t\ta.yes  b.no  c.bawlang\n",
+            {"\n\t\t",
             "",
             "",
             "",
@@ -269,14 +264,14 @@ void controlFlow(){
             },
 
 
-            {"\n\t\tC++ is programmming language use for kuana?:\n\n\t\t\ta.yes  b.no  c.bawlang\n",
+            {"\n\t\t",
             "",
             "",
             "",
             ""
             },
 
-            {"\n\t\tC++ is programmming language use for kuana?:\n\n\t\t\ta.yes  b.no  c.bawlang\n",
+            {"\n\t\t",
             "",
             "",
             "",
@@ -355,22 +350,21 @@ void question_And_Answer(string questionAns[][2], string your_answers[], int qa_
 
 void show_lectures(string lectures[][5], int l_length, int l_slength){
 
-    for(int i=6; i<l_length; i++){
+    for(int i=2; i<l_length; i++){
 
         for(int j=0; j<l_slength; j++){
             system("cls");
             cout<<lectures[i][j]<<endl;
             string ans;
+
             do{
-            cout<<"\n\n\t\tPress 1 to proceed: ";
-            cin>>ans;
-            if(ans!="1"){
-                cout<<"\n\t\ttry again\n";
-            }
+                cout<<"\n\n\t\tPress 1 to proceed: ";
+                cin>>ans;
+                if(ans!="1"){
+                    cout<<"\n\t\ttry again\n";
+                    }
             }while(ans!="1");
             }
-
-
     }
 }
 
