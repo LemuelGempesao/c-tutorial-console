@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include <stdbool.h>
+
 using namespace std;
 
 
@@ -12,12 +12,16 @@ void controlFlow();
 void lecture_or_quiz(string lectures[][5], int l_length, int l_slength, string questionAns[0][2], string your_answers[], int qa_length, int anslength, int *score);
 void question_And_Answer(string questionAns[][2], string your_answers[], int qa_length, int anslength, int *score);
 void show_lectures(string lectures[][5], int l_length, int l_slength);
-int score;
+int score=0;
+//int score;
 
 
 int main()
 {
     string choice;
+    string nexts;
+
+
 
     do{
         gameName();
@@ -43,7 +47,10 @@ int main()
             cout<<"\n\n\t\tInvalid Choice\n\n";
 
         }
+
         }
+
+
 
 
     }while(choice.length()==1|| choice!="1" && choice!="2" && choice!="3");
@@ -112,8 +119,8 @@ int main()
 
         string questionAns[][2]= {
             {"\n\n\t\t1. Which statements are true about C++?:\n\n\t\tI.C++ is not a programming language\n\t\tII. C++ can be used to build games.\n\t\tIII.C++ is good for operating systems or browsers development\n\n\t\ta. I only\n\t\tb. II and III\n\t\tc. all of the statements: \n\t\t", "b"},
-            {"\n\n\t\t2. Find the missing structure\n\n\t\t#include <_____>\n\t\tusing namespace std;\n\n\t\tint main(){\n\t\t  cout<<\"Hello World\";\n\n\t\treturn 0;\n\n\t\t}\n\n\t\ta.stdio.h\n\t\tb.iostrim\n\t\tc.iostream\n\t\t", "c"},
-            {"\n\n\t\t3. This Program returns an error why?\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main(){\n\n\t\tstring programmingLanguage=\"C++\";\n\n\t\tcout<<programminglanguage;\n\n\t\t  return 0;\n\n\t\t}:\n\n\t\ta.Calling an incorrect Case of Identifier\n\t\tb.data type should be int\n\t\tc.No semicolon\n\t\t", "a"},
+            {"\n\n\t\t2. Find the missing structure\n\n\t\t#include <_____>\n\t\tusing namespace std;\n\n\t\tint main(){\n\t\t  cout<<\"Hello World\";\n\n\t\t  return 0;\n\n\t\t}\n\n\t\ta.stdio.h\n\t\tb.iostrim\n\t\tc.iostream\n\t\t", "c"},
+            {"\n\n\t\t3. This Program returns an error why?\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main(){\n\n\t\t  string programmingLanguage=\"C++\";\n\n\t\t  cout<<programminglanguage;\n\n\t\t  return 0;\n\n\t\t}:\n\n\t\ta.Calling an incorrect Case of Identifier\n\t\tb.data type should be int\n\t\tc.No semicolon\n\t\t", "a"},
             {"\n\n\t\t4. Determine if its a valid or invalid identifier\n\n\t\tfirst name\n\n\t\ta.valid\n\t\tb.invalid\n\t\tc.hard to tell\n\t\t", "b"},
             {"\n\n\t\t5. Guess the output\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main(){\n\n\t\t int myGrade=99;\n\n\t\t cout<<\"myGrade\";\n\n\t\t return 0;\n\n\t\t}\n\n\t\ta.99\n\t\tb.error\n\t\tc.myGrade\n\t\t", "c"},
             {"\n\n\t\t6. Determine data type suitable for this data.\n\n\t\tThe number of days in a year:\n\n\t\ta.int\n\t\tb.float\n\t\tc.string\n\t\t", "a"},
@@ -191,16 +198,16 @@ int main()
         };
 
         string questionAns[][2]= {
-            {"\n C++ is programmming language use for kuana?:\n a.yes  b.no  c.bawlang ", "c"},
-            {"\n C++ is programmming language use for kuanb?:\n a.yes  b.no  c.bawlang ", "a"},
-            {"\n C++ is programmming language use for kuanc?:\n a.yes  b.no  c.bawlang ", "a"},
-            {"\n C++ is programmming language use for kuand?:\n a.yes  b.no  c.bawlang ", "b"},
-            {"\n C++ is programmming language use for kuane?:\n a.yes  b.no  c.bawlang ", "c"},
-            {"\n C++ is programmming language use for kuanf?:\n a.yes  b.no  c.bawlang ", "b"},
-            {"\n C++ is programmming language use for kuang?:\n a.yes  b.no  c.bawlang  ", "c"},
-            {"\n C++ is programmming language use for kuanh?:\n a.yes  b.no  c.bawlang ", "c"},
-            {"\n C++ is programmming language use for kuani?:\n a.yes  b.no  c.bawlang ", "a"},
-            {"\n C++ is programmming language use for kuanj?:\n a.yes  b.no  c.bawlang ", "a"}
+            {"\n\n\t\t1. In C++ what command use to take input from the user?\n\n\t\ta. cout\n\t\tb. scanf \n\t\tc. cin\n\t\t", "c"},
+            {"\n\n\t\t2. Determine the output\n\n\t\tstring name;\n\n\t\tcout<<\"Enter name \";\n\t\tcin>>name; //lets assume you type BJARNE\n\n\t\tcout<<\"Your name is: \"<<name;\n\n\t\ta. You entered: BJARNE\n\t\tb. Your name is: BJARNE\n\t\tc. You are BJARNE", "b"},
+            {"\n\n\t\t3. Supply the missing code\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main(){\n\n\t\t int day=7;\n\n\t\t __(day==7){\n\t\t cout<<\"Sunday\"; //displays \"Sunday\"\n\n\t\t}\n\n\t\t return 0;\n\n\t\t}\n\n\t\ta. if\n\t\tb. else\n\t\tc. else if", "a"},
+            {"\n\n\t\t4. Determine the Output\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main(){\n\n\t\t int num=8;\n\n\t\t  if(num%2==0){\n\t\t   cout << \"EVEN\";\n\n\t\t  }\n\n\t\t  else{\n\t\t    cout << \"ODD\";\n\n\t\t  }\n\n\t\t return 0;\n\n\t\t}\n\n\t\ta. EVEN\n\t\tb. ODD\n\t\tc. 0", "a"},
+            {"\n\n\t\t5. Which of the following statements is true about nested if-else statements\n\n\t\ta. They cannot be used in c++\n\t\tb. They can have one if statement and multiple else statement\n\t\tc. They can have multiple if and else statement with each other", "c"},
+            {"\n\n\t\t6. What data type is commonly used in switch cases?\n\n\t\ta. int\n\t\tb. floats\n\t\tc. string\n\t\t", "a"},
+            {"\n\n\t\t7. Determine the output?\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main() {\n\t\t  int order = 4;\n\n\t\t  switch(choice) {\n\t\t    case 1:\n\t\t      cout << \"Rice with egg\";\n\t\t    case 2:\n\t\t      cout << \"Rice with ham\";\n\t\t    case 3:\n\t\t      cout << \"Rice with pork\";\n\t\t    default:\n\t\t      cout << \"Water\"\n\t\t  }\n\t\t}\n\n\t\ta. Rice with egg\n\t\tb. Water\n\t\tc. Rice with ham", "b"},
+            {"\n\n\t\t8. In C++ what symbol is used for logical OR operator?\n\n\t\ta. &&\n\t\tb. or\n\t\tc. ||", "c"},
+            {"\n\n\t\t9. Complete the missing code to run the program\n\n\t\tint day=13;\n\n\t\tif (day>=1 __ day<=12){\n\t\t  cout <<\"Valid Month;\n\n\t\telse{\n\t\t  cout << \"Invalid month\"; //displays \"Invalid month\";\n\t\t}\n\n\t\ta. ||\n\t\tb. !\n\t\tc. &&\n", "c"},
+            {"\n\n\t\t10. guess the output?\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main() {\n\n\t\t  int age;\n\t\t  cin >> age; //assume user enters 5\n\n\t\t  if(age >0 && age <=3){ \n\t\t    cout << \"Free Meal\";\n\t\t  }\n\n\t\t  else if (age >= 4 && age <=6) {\n\t\t    cout << \"Discounted Meal\";\n\t\t  }\n\n\t\t  else{\n\t\t    cout << \"Normal\";\n\t\t  }\n\t\t}\n\n\t\ta. Free Meal\n\t\tb. Discounted Meal\n\t\tc. Normal\n", "b"}
             };
 
         //QA ROW LENGTH AND COLUMN LENGTH
@@ -256,16 +263,16 @@ void controlFlow(){
             }
         };
         string questionAns[][2]= {
-                            {"\n C++ is programmming language use for kuana?:\n a.yes  b.no  c.bawlang ", "a"},
-                            {"\n C++ is programmming language use for kuanb?:\n a.yes  b.no  c.bawlang ", "a"},
-                            {"\n C++ is programmming language use for kuanc?:\n a.yes  b.no  c.bawlang ", "a"},
-                            {"\n C++ is programmming language use for kuand?:\n a.yes  b.no  c.bawlang ", "a"},
-                            {"\n C++ is programmming language use for kuane?:\n a.yes  b.no  c.bawlang ", "a"},
-                            {"\n C++ is programmming language use for kuanf?:\n a.yes  b.no  c.bawlang ", "a"},
-                            {"\n C++ is programmming language use for kuang?:\n a.yes  b.no  c.bawlang  ", "a"},
-                            {"\n C++ is programmming language use for kuanh?:\n a.yes  b.no  c.bawlang ", "a"},
-                            {"\n C++ is programmming language use for kuani?:\n a.yes  b.no  c.bawlang ", "a"},
-                            {"\n C++ is programmming language use for kuanj?:\n a.yes  b.no  c.bawlang ", "a"}
+                            {"\n\n\t\t \n\n\t\ta. \n\t\tb. \n\t\tc. \n", "a"},
+                            {"\n\n\t\t \n\n\t\ta. \n\t\tb. \n\t\tc. \n", "b"},
+                            {"\n\n\t\t \n\n\t\ta. \n\t\tb. \n\t\tc. \n", "b"},
+                            {"\n\n\t\t \n\n\t\ta. \n\t\tb. \n\t\tc. \n", "c"},
+                            {"\n\n\t\t \n\n\t\ta. \n\t\tb. \n\t\tc. \n", "a"},
+                            {"\n\n\t\t \n\n\t\ta. \n\t\tb. \n\t\tc. \n", "c"},
+                            {"\n\n\t\t \n\n\t\ta. \n\t\tb. \n\t\tc. \n", "b"},
+                            {"\n\n\t\t \n\n\t\ta. \n\t\tb. \n\t\tc. \n", "a"},
+                            {"\n\n\t\t \n\n\t\ta. \n\t\tb. \n\t\tc. \n", "a"},
+
 
             };
 
@@ -287,14 +294,15 @@ void controlFlow(){
 }
 
 void question_And_Answer(string questionAns[][2], string your_answers[], int qa_length, int anslength, int *score) {
-
+    int functionScore=0;
+    string nexts;
     //green    \033[32m     \033[0m
     //red      \033[31m
     //blue     \033[34m
     //cyan     \033[36m
     //magenta  \033[35m
     //yellow   \033[33m
-    *score=0;
+    //*score=0;
     string reset;
     string next;
     for (int i = 0; i < qa_length; i++) {
@@ -315,7 +323,8 @@ void question_And_Answer(string questionAns[][2], string your_answers[], int qa_
 
         if (your_answers[i]==questionAns[i][1]){
             cout<<"\n\t\t\033[32mCORRECT\033[0m\n";
-            (*score)++;
+            //(*score)++
+            functionScore++;
             }
 
         else{
@@ -331,7 +340,16 @@ void question_And_Answer(string questionAns[][2], string your_answers[], int qa_
         }while(next!="1");
     }
     system("cls");
-    cout<<"\n\n\n\n\t\tYour Score is "<<*score<<"/10\n\n";
+    cout<<"\n\n\n\n\t\tYour Score is "<<functionScore<<"/10\n\n";
+    //cout<<"\n\n\n\n\t\tYour Score is "<<*score<<"/10\n\n";
+    *score+=functionScore;
+     if(*score >= 30){
+            do{
+            cout<<"\n\n\t\tYOU COMPLETED THIS COURSE";
+            cin>>nexts;
+            }while(nexts!="1");
+
+            }
 
     do{
         cout<<"\n\n\t\t\033[32mPress 1 to exit\033[0m\n\n\t\t";
@@ -350,7 +368,7 @@ void question_And_Answer(string questionAns[][2], string your_answers[], int qa_
 
 void show_lectures(string lectures[][5], int l_length, int l_slength){
 
-    for(int i=5; i<l_length; i++){
+    for(int i=0; i<l_length; i++){
 
         for(int j=0; j<l_slength; j++){
             system("cls");
@@ -407,8 +425,9 @@ string yes_no;
 
 
 void gameName(){
-
     system("cls");
+
+
     cout<<"\n\n\t\t\033[36m_____________________________________________________________________\033[0m\n\n"<<endl;
     cout <<"\n\n\t\t\t\t\033[36;46m* * * *\033[0m\t\t\033[36;46m**\033[0m\t        \033[36;46m**\033[0m\033[30m+\033[0m"<<endl;
     cout <<"    \t\t\t\t\033[36;46m**\033[0m     \t\t\033[36;46m**\033[0m\t        \033[36;46m**\033[0m\033[30m+\033[0m"<<endl;
