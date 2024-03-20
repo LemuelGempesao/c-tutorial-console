@@ -3,12 +3,12 @@
 #include <stdbool.h>
 using namespace std;
 
+
+void gameName();
+string chooseLesson();
 void basicConcepts();
 void conditionals();
 void controlFlow();
-void gameName();
-string chooseLesson();
-
 void lecture_or_quiz(string lectures[][5], int l_length, int l_slength, string questionAns[0][2], string your_answers[], int qa_length, int anslength, int *score);
 void question_And_Answer(string questionAns[][2], string your_answers[], int qa_length, int anslength, int *score);
 void show_lectures(string lectures[][5], int l_length, int l_slength);
@@ -17,7 +17,7 @@ int score;
 
 int main()
 {
-string choice;
+    string choice;
 
     do{
         gameName();
@@ -124,7 +124,6 @@ string choice;
                 };
 
 
-
         //QA ROW LENGTH AND COLUMN LENGTH
         int qa_length = sizeof(questionAns)/sizeof(questionAns[0]);
         int qa_slength=sizeof(questionAns[0])/ sizeof(questionAns[0][0]);
@@ -137,13 +136,10 @@ string choice;
         string your_answers[10];
         int anslength=sizeof(your_answers)/sizeof(your_answers[0]);
 
-
+        //INVOKE LECTURE OR QUIZ FUNCTION
         lecture_or_quiz(lectures,  l_length,  l_slength, questionAns, your_answers, qa_length, anslength, &score);
 
-
-
     }
-
 
 
     void conditionals(){
@@ -178,11 +174,11 @@ string choice;
             "\n\n\t\t LESSON TAKEAWAYS \n\n\t\t-Decision making is easy right?\n\t\tYou can check for a condition using the if statement.\n\t\tIn case the condition of if statement is false, the code in an else if statement can be executed to test for another condition.\n\n\t\tAnd if the all the conditions are false else statement is executed\n\n\t\t"
             },
 
-             {"\n\n\n\t\tSWITCH STATEMENT\n\n\t\t",
-            "",
-            "",
-            "",
-            ""
+             {"\n\n\n\t\tSWITCH STATEMENT\n\n\t\t-The switch statement can be used to check for equality against a list of (int and char) values, \n\t\tinstead of multiple else if statements.\n\n\t\tSyntax:\n\n\t\tswitch (expression or variable) {\n\n\t\t  case constant1:\n\t\t    //some code\n\t\t    break;\n\t\t  case constant2:\n\t\t    //some code\n\t\t    break;\n\t\t  //more cases as needed\n\t\t  default:\n\t\t    //some code\n\t\t    break;\n\t\t}\n\n\t\tExample:\n\n\t\tint choice=2;\n\n\t\t  switch(choice) {\n\t\t    case 1:\n\t\t      cout << \"Coffee\";\n\t\t    case 2:\n\t\t      cout << \"Tea\"; //displays \"Tea\" since choice matches with this case(2)\n\t\t    case 3:\n\t\t      cout <<\"Water\";\n\t\t    default:\n\t\t      cout << \"Empty\"\n\t\t  }\n\t\t",
+            "\n\n\t\tBREAK\n\n\t\t-The break statement is used to terminate the switch, when the case is matched.\n\t\t-If you forget to to add a break statement after each case,\n\t\tthe program will execute the code in the next case statement even if the value does not match\n\n\t\tFor example:\n\n\t\tint choice=2;\n\n\t\t  switch(choice) {\n\t\t    case 1:\n\t\t      cout << \"Coffee\";\n\t\t    case 2:\n\t\t      cout << \"Tea\";\n\t\t    case 3:\n\t\t      cout <<\"Water\";\n\t\t}\n\n\t\t//Displays \"TeaWater\";\n\t\t",
+            "\n\n\t\tDEFAULT\n\n\t\t-You might notice that there is a default case at the end of the switch statement.\n\t\tIt is used to run code, when none of the cases match just like how else statement does:\n\n\t\tFor example:\n\n\t\t\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main() {\n\t\t  int choice=4;\n\n\t\t  switch(choice) {\n\t\t    case 1:\n\t\t      cout << \"Coffee\";\n\t\t    case 2:\n\t\t      cout << \"Tea\";\n\t\t    case 3:\n\t\t      cout <<\"Water\";\n\t\t    default:\n\t\t      cout << \"Empty\"; //displays \"Empty\" since choice(4) have no matching cases\n\t\t  }\n\t\t}\n",
+            "\n\n\t\tCan You guess the output?\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main() {\n\t\t  char grade = 'C';\n\n\t\t  switch(choice) {\n\t\t    case 'A':\n\t\t      cout << \"Excelent\";\n\t\t    case 'B':\n\t\t      cout << \"Good Job\";\n\t\t    case 'C':\n\t\t      cout << \"Not Bad\";\n\t\t    default:\n\t\t      cout << \"Invalid\"\n\t\t  }\n\t\t}\n",
+            "\n\n\t\tCan You guess the output?\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main() {\n\t\t  char grade = 'C';\n\n\t\t  switch(choice) {\n\t\t    case 'A':\n\t\t      cout << \"Excelent\";\n\t\t    case 'B':\n\t\t      cout << \"Good Job\";\n\t\t    case 'C':\n\t\t      cout << \"Not Bad\"; //displays \"Not Bad\" since grade matches this case ('C')\n\t\t    default:\n\t\t      cout << \"Invalid\"\n\t\t  }\n\t\t}\n",
             },
 
              {"\n\n\n\t\tMULTIPLE CONDITIONS\n\n\t\t",
@@ -194,20 +190,17 @@ string choice;
         };
 
         string questionAns[][2]= {
-            {"\n C++ is programmming language use for kuana?:\n a.yes  b.no  c.bawlang ", "a"},
+            {"\n C++ is programmming language use for kuana?:\n a.yes  b.no  c.bawlang ", "c"},
             {"\n C++ is programmming language use for kuanb?:\n a.yes  b.no  c.bawlang ", "a"},
             {"\n C++ is programmming language use for kuanc?:\n a.yes  b.no  c.bawlang ", "a"},
-            {"\n C++ is programmming language use for kuand?:\n a.yes  b.no  c.bawlang ", "a"},
-            {"\n C++ is programmming language use for kuane?:\n a.yes  b.no  c.bawlang ", "a"},
-            {"\n C++ is programmming language use for kuanf?:\n a.yes  b.no  c.bawlang ", "a"},
-            {"\n C++ is programmming language use for kuang?:\n a.yes  b.no  c.bawlang  ", "a"},
-            {"\n C++ is programmming language use for kuanh?:\n a.yes  b.no  c.bawlang ", "a"},
+            {"\n C++ is programmming language use for kuand?:\n a.yes  b.no  c.bawlang ", "b"},
+            {"\n C++ is programmming language use for kuane?:\n a.yes  b.no  c.bawlang ", "c"},
+            {"\n C++ is programmming language use for kuanf?:\n a.yes  b.no  c.bawlang ", "b"},
+            {"\n C++ is programmming language use for kuang?:\n a.yes  b.no  c.bawlang  ", "c"},
+            {"\n C++ is programmming language use for kuanh?:\n a.yes  b.no  c.bawlang ", "c"},
             {"\n C++ is programmming language use for kuani?:\n a.yes  b.no  c.bawlang ", "a"},
             {"\n C++ is programmming language use for kuanj?:\n a.yes  b.no  c.bawlang ", "a"}
             };
-
-
-
 
         //QA ROW LENGTH AND COLUMN LENGTH
         int qa_length = sizeof(questionAns)/sizeof(questionAns[0]);
@@ -221,10 +214,11 @@ string choice;
         string your_answers[10];
         int anslength=sizeof(your_answers)/sizeof(your_answers[0]);
 
+
+        //INVOKE LECTURE OR QUIZ FUNCTION
         lecture_or_quiz(lectures,  l_length,  l_slength, questionAns, your_answers, qa_length, anslength, &score);
 
 }
-
 
 
 void controlFlow(){
@@ -272,11 +266,7 @@ void controlFlow(){
                             {"\n C++ is programmming language use for kuani?:\n a.yes  b.no  c.bawlang ", "a"},
                             {"\n C++ is programmming language use for kuanj?:\n a.yes  b.no  c.bawlang ", "a"}
 
-
-
             };
-
-
 
 
         //QA ROW LENGTH AND COLUMN LENGTH
@@ -291,6 +281,7 @@ void controlFlow(){
         string your_answers[10];
         int anslength=sizeof(your_answers)/sizeof(your_answers[0]);
 
+        //INVOKE LECTURE OR QUIZ FUNCTION
         lecture_or_quiz(lectures,  l_length,  l_slength, questionAns, your_answers, qa_length, anslength, &score);
 }
 
@@ -310,7 +301,7 @@ void question_And_Answer(string questionAns[][2], string your_answers[], int qa_
         cout << questionAns[i][0];
         string ans;
         do {
-            cout<<"\n\n\t\t\033[32mEnter Answer:\033[0m ";
+            cout<<"\n\n\t\t\033[33mEnter Answer:\033[0m ";
             cin >> ans;
             if (ans.length() != 1 || ans==""|| (ans != "a" && ans != "b" && ans != "c")) {
                 cout << "\n\t\t\033[31mINVALID\033[0m\n\t\t";
@@ -327,11 +318,11 @@ void question_And_Answer(string questionAns[][2], string your_answers[], int qa_
             }
 
         else{
-            cout<<"\n\t\t\033[31mWRONG\033[0m\n\t\t\033[32mThe answer is\033[0m:  "<<questionAns[i][1]<<"\n";
+            cout<<"\n\t\t\033[31mWRONG\033[0m\n\t\t\033[33mThe answer is\033[0m:  "<<questionAns[i][1]<<"\n";
             }
 
         do{
-            cout<<"\n\n\n\n\t\t\033[32mNext? Press 1\033[0m\n\t\t";
+            cout<<"\n\n\n\n\t\t\033[32mPress 1 to proceed\033[0m\n\t\t";
             cin>>next;
             if(next!="1"){
                 cout<<"\n\n\t\t\033[31mTry Again\033[0m\n\t\t";
@@ -339,10 +330,10 @@ void question_And_Answer(string questionAns[][2], string your_answers[], int qa_
         }while(next!="1");
     }
     system("cls");
-    cout<<"\n\t\tYour Score is "<<*score<<"/10\n\n";
+    cout<<"\n\n\n\n\t\tYour Score is "<<*score<<"/10\n\n";
 
     do{
-        cout<<"\n\n\t\t\033[33mPress 1 to exit\033[0m\n\n\t\t";
+        cout<<"\n\n\t\t\033[32mPress 1 to exit\033[0m\n\n\t\t";
         cin>>reset;
 
         if(reset!="1"){
@@ -358,7 +349,7 @@ void question_And_Answer(string questionAns[][2], string your_answers[], int qa_
 
 void show_lectures(string lectures[][5], int l_length, int l_slength){
 
-    for(int i=0; i<l_length; i++){
+    for(int i=4; i<l_length; i++){
 
         for(int j=0; j<l_slength; j++){
             system("cls");
@@ -379,7 +370,6 @@ void show_lectures(string lectures[][5], int l_length, int l_slength){
 
 void lecture_or_quiz(string lectures[][5], int l_length, int l_slength, string questionAns[0][2], string your_answers[], int qa_length, int anslength, int *score){
 string yes_no;
-bool is_finished=false;
 
 
     //green    \033[32m     \033[0m
@@ -399,7 +389,7 @@ bool is_finished=false;
             if(yes_no=="1"){
                 system("cls");
                 show_lectures(lectures, l_length, l_slength);
-                is_finished=true;
+
             }
 
             else if(yes_no=="2"){
@@ -412,31 +402,29 @@ bool is_finished=false;
             }
         }while(yes_no.length()!=1||(yes_no!="1"&&yes_no!="2"));
 
-
-
-
 }
+
+
 void gameName(){
 
     system("cls");
-
-    cout<<"\n\n\t\t\033[33m_____________________________________________________________________\033[0m\n\n"<<endl;
+    cout<<"\n\n\t\t\033[36m_____________________________________________________________________\033[0m\n\n"<<endl;
     cout <<"\n\n\t\t\t\t\033[36;46m* * * *\033[0m\t\t\033[36;46m**\033[0m\t        \033[36;46m**\033[0m\033[30m+\033[0m"<<endl;
     cout <<"    \t\t\t\t\033[36;46m**\033[0m     \t\t\033[36;46m**\033[0m\t        \033[36;46m**\033[0m\033[30m+\033[0m"<<endl;
     cout <<"    \t\t\t\t\033[36;46m**\033[0m \t    \033[36;46m* * * * * \033[0m\t    \033[36;46m* * * * * \033[0m\033[30m+\033[0m"<<endl;
     cout <<"    \t\t\t\t\033[36;46m**\033[0m     \t\t\033[36;46m**\033[0m \t        \033[36;46m**\033[0m\033[30m+\033[0m"<<endl;
     cout <<"\t\t\t\t\033[36;46m* * * *\033[0m\t\t\033[36;46m**\033[0m\t        \033[36;46m**\033[0m\033[30m+\033[0m"<<endl;;
-    cout<<"\n\n\t\t\t\t\t      \033[36mCHALLENGE\033[0m";
-
-    cout<<"\n\n\t\t\033[33m____________________________________________________________________\033[0m\n"<<endl;
-    cout << "\t\t\t\t  "<<"\033[36mWELCOME TO THE FUNDAMENTALS OF C++\033[0m\n" << endl;
+    cout<<"\n\n\t\t\t\t\t\033[36mM  O  N  T  A  G  E\033[0m";
+    cout<<"\n\n\t\t\033[36m____________________________________________________________________\033[0m\n"<<endl;
+    cout << "\n\t\t\t\t  "<<"\033[36mWELCOME TO THE FUNDAMENTALS OF C++\033[0m\n" << endl;
     }
 
 
 
  string chooseLesson(){
+
     string choice;
-    cout<<"\n\n\t\t\033[32mAVAILABLE TOPICS\033[0m: \033[34mBASIC CONCEPTS(1)\033[0m, \033[31mCONDITIONALS(2)\033[0m, \033[35mCONTROL FLOW(3)\033[0m";
+    cout<<"\n\n\t\t\033[32mAVAILABLE TOPICS\033[0m: \033[34mBASIC CONCEPTS(1), \033[31mCONDITIONALS(2)\033[0m, \033[35mCONTROL FLOW(3)\033[0m";
     cout<<"\n\n\t\t\033[32mEnter choice(1-3)\033[0m: ";
     cin>>choice;
     return choice;
