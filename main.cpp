@@ -181,11 +181,12 @@ int main()
             "\n\n\t\tCan You guess the output?\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main() {\n\t\t  char grade = 'C';\n\n\t\t  switch(choice) {\n\t\t    case 'A':\n\t\t      cout << \"Excelent\";\n\t\t    case 'B':\n\t\t      cout << \"Good Job\";\n\t\t    case 'C':\n\t\t      cout << \"Not Bad\"; //displays \"Not Bad\" since grade matches this case ('C')\n\t\t    default:\n\t\t      cout << \"Invalid\"\n\t\t  }\n\t\t}\n",
             },
 
-             {"\n\n\n\t\tMULTIPLE CONDITIONS\n\n\t\t",
-            "",
-            "",
-            "",
-            ""
+             {"\n\n\n\t\tMULTIPLE CONDITIONS\n\n\t\t-In some scenarios we need to combine multiple conditions.\n\t\t-In C++, you can use logical operators such as '&&' (logical AND), '||' (logical OR), \n\t\tand '!' (logical NOT)to create multiple conditions in if statements, loops, and other structures\n\n\t\tAND OPERATOR (&&)\n\n\t\t-Used to combine Multiple conditions in such a way that all conditions must be true\n\t\tfor overall expression to be true\n\n\t\tFor example:\n\n\t\tint age=19;\n\n\t\tif (age>=18 && age <=50){\n\t\tcout <<\"Eligible to Work; //displays \"Eligible to Work\" since 19 is within the range of 18 and 50\n\t\t}",
+            "\n\n\t\tOR OPERATOR(||)\n\n\t\t-The logical OR operator combines conditions and check if any one of them is true\n\n\t\tFor example:\n\n\t\tint level = 5;\n\t\tint points = 300;\n\n\t\tif (level >=5 || points>=400){\n\t\t  cout << \"You are Allowed to enter this Area\"; //displays this line since one of the condition is true level(5) is >= 5\n\t\t}",
+            "\n\n\t\tNOT OPERATOR (!)\n\n\t\t-The logical NOT operator reverse the condition: in case the condition is true,\n\t\tthen not operator will make it false, and vice-e-versa\n\n\t\tFor example:\n\n\t\tint height = 200;\n\n\t\tif(!(height <150){\n\t\t  cout << \'Welcome\"; //displays \"Welcome\" since the condition is inverse from false to true\n\t\t}\n\n\t\t",
+            "\n\n\t\tCan you guess the output?\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main() {\n\n\t\t  int age;\n\t\t  cin >> age; //assume user enters 4\n\n\t\t  if(age >0 && age <=3){ \n\t\t    cout << \"Free\";\n\t\t  }\n\n\t\t  else if (age >= 4 && age <=6) {\n\t\t    cout << \"Discounted\";\n\t\t  }\n\n\t\t  else{\n\t\t    cout << \"Normal\";\n\t\t  }\n\t\t}\n",
+            "\n\n\t\tCan you guess the output?\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main() {\n\n\t\t  int age;\n\t\t  cin >> age; //assume user enters 4\n\n\t\t  if(age >0 && age <=3){ \n\t\t    cout << \"Free\";\n\t\t  }\n\n\t\t  else if (age >= 4 && age <=6) {\n\t\t    cout << \"Discounted\"; //displays \"Discounted\" since 4 is within the range of this condition\n\t\t  }\n\n\t\t  else{\n\t\t    cout << \"Normal\";\n\t\t  }\n\t\t}\n"
+
             }
         };
 
@@ -349,7 +350,7 @@ void question_And_Answer(string questionAns[][2], string your_answers[], int qa_
 
 void show_lectures(string lectures[][5], int l_length, int l_slength){
 
-    for(int i=4; i<l_length; i++){
+    for(int i=5; i<l_length; i++){
 
         for(int j=0; j<l_slength; j++){
             system("cls");
