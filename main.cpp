@@ -1,27 +1,26 @@
 #include <iostream>
 #include <string>
+#include <cctype>
+
 
 using namespace std;
-
-
 void gameName();
 string chooseLesson();
 void basicConcepts();
 void conditionals();
 void controlFlow();
-void lecture_or_quiz(string lectures[][5], int l_length, int l_slength, string questionAns[0][2], string your_answers[], int qa_length, int anslength, int *score);
-void question_And_Answer(string questionAns[][2], string your_answers[], int qa_length, int anslength, int *score);
+void lecture_or_quiz(string lectures[][5], int l_length, int l_slength, string questionAns[0][2], string your_answers[], int qa_length, int anslength, int *score, bool *isFinished);
+void question_And_Answer(string questionAns[][2], string your_answers[], int qa_length, int anslength, int *score,bool *isFinished);
 void show_lectures(string lectures[][5], int l_length, int l_slength);
 int score=0;
 //int score;
+bool l1_isFinished=false, l2_isFinished=false, l3_isFinished=false;
+
 
 
 int main()
 {
     string choice;
-    string nexts;
-
-
 
     do{
         gameName();
@@ -35,20 +34,34 @@ int main()
         }
 
         else if(choice=="2"){
-            conditionals();
-            break;
+            if(score>=10 && l1_isFinished){
+                conditionals();
+                break;
+            }
+
+            else{
+                cout <<"\n\n\t\tAttain a perfect score in lesson 1 to access this lesson\n\n\t\t";
+            }
+
         }
 
         else if(choice=="3"){
-            controlFlow();
-            break;
+
+            //if(score>=20  && l2_isFinished){
+                controlFlow();
+                break;
+            //}
+            /*else{
+                cout <<"\n\n\n\t\tAttain a perfect score in lesson 2 to access this lesson\n\n\t\t";
+            }*/
+
         }
         else {
             cout<<"\n\n\t\tInvalid Choice\n\n";
 
         }
 
-        }
+    }
 
 
 
@@ -67,7 +80,6 @@ int main()
     //cyan     \033[36m
     //magenta  \033[35m
     //yellow   \033[33m
-
         string lectures[][5]= {
             {"\n\n\t\t\033[34mWELCOME TO C++\033[0m \n\n\t\tC++ is one of the most popular programming languages.\n\t\tIt is used to build games, operating system, browsers, and much more.",
             "\n\n\t\t\033[34mOUTPUT\033[0m \n\n\t\tCoders use output all the time to check the computer if its following the given instruction\n\t\tex:\n\t\tcout <<\"Welcome to c++\";\n",
@@ -144,7 +156,7 @@ int main()
         int anslength=sizeof(your_answers)/sizeof(your_answers[0]);
 
         //INVOKE LECTURE OR QUIZ FUNCTION
-        lecture_or_quiz(lectures,  l_length,  l_slength, questionAns, your_answers, qa_length, anslength, &score);
+        lecture_or_quiz(lectures,  l_length,  l_slength, questionAns, your_answers, qa_length, anslength, &score, &l1_isFinished);
 
     }
 
@@ -224,18 +236,19 @@ int main()
 
 
         //INVOKE LECTURE OR QUIZ FUNCTION
-        lecture_or_quiz(lectures,  l_length,  l_slength, questionAns, your_answers, qa_length, anslength, &score);
+        lecture_or_quiz(lectures,  l_length,  l_slength, questionAns, your_answers, qa_length, anslength, &score, &l2_isFinished);
 
 }
 
 
 void controlFlow(){
+    string res;
 
         string lectures[][5]={
-            {"\n\t\t,"
-            "",
-            "",
-            "",
+            {"\n\n\n\t\tLOOPS\n\n\t\t-A loop allows you to repeat a block of code multiple times.\n\t\tFor example, a game can use a loop through all items in the warehouse and perform calculations\n\n\t\t",
+            "\n\n\t\tWHLE LOOPS\n\n\t\t-The while loop takes a condition and repeats its statements\n\t\twhile the condition is true.\n\n\t\tSyntax:\n\n\t\twhile(condition) {\n\t\t  //code to be executed repeatedly\n\t\t  //as long as the condition is true\n\t\t}\n",
+            "\n\n\t\tFor example:\n\n\t\tint num=1;\n\n\t\twhile(num<5) {\n\t\t cout << num; //displays 1234\n\t\t num=num+1;\n\t\t}\n\t\tThe statement num=num+1 increases the value of num by 1\n\t\teach time the loop runs or so called MODIFIERS.\n\n\t\tThis is important as without it the loop would run forever\n\n\t\t",
+            "\n\n\t\tINCREMENT AND DECREMENT\n\n\t\t-As it's common to increment and decrement a value by 1 in loops.\n\t\tC++ provides a special increment and decrement operators.\n\n\t\tFor example: (num=num+1 can be num++) or (num=num-1 can be num--)",
             ""
             },
 
@@ -265,14 +278,14 @@ void controlFlow(){
         string questionAns[][2]= {
                             {"\n\n\t\t \n\n\t\ta. \n\t\tb. \n\t\tc. \n", "a"},
                             {"\n\n\t\t \n\n\t\ta. \n\t\tb. \n\t\tc. \n", "b"},
+                            {"\n\n\t\t \n\n\t\ta. \n\t\tb. \n\t\tc. \n", "c"},
+                            {"\n\n\t\t \n\n\t\ta. \n\t\tb. \n\t\tc. \n", "a"},
                             {"\n\n\t\t \n\n\t\ta. \n\t\tb. \n\t\tc. \n", "b"},
                             {"\n\n\t\t \n\n\t\ta. \n\t\tb. \n\t\tc. \n", "c"},
                             {"\n\n\t\t \n\n\t\ta. \n\t\tb. \n\t\tc. \n", "a"},
-                            {"\n\n\t\t \n\n\t\ta. \n\t\tb. \n\t\tc. \n", "c"},
                             {"\n\n\t\t \n\n\t\ta. \n\t\tb. \n\t\tc. \n", "b"},
-                            {"\n\n\t\t \n\n\t\ta. \n\t\tb. \n\t\tc. \n", "a"},
-                            {"\n\n\t\t \n\n\t\ta. \n\t\tb. \n\t\tc. \n", "a"},
-
+                            {"\n\n\t\t \n\n\t\ta. \n\t\tb. \n\t\tc. \n", "c"},
+                            {"\n\n\t\t \n\n\t\ta. \n\t\tb. \n\t\tc. \n", "a"}
 
             };
 
@@ -290,10 +303,57 @@ void controlFlow(){
         int anslength=sizeof(your_answers)/sizeof(your_answers[0]);
 
         //INVOKE LECTURE OR QUIZ FUNCTION
-        lecture_or_quiz(lectures,  l_length,  l_slength, questionAns, your_answers, qa_length, anslength, &score);
+        lecture_or_quiz(lectures,  l_length,  l_slength, questionAns, your_answers, qa_length, anslength, &score, &l3_isFinished);
+
+        if(score==30){
+            do{
+                cout<<"\n\n\t\tYOU COMPLETED THIS COURSE";
+                cout<<"\n\n\t\tPress 1 to exit";
+                cin>>res;
+            }while(res!="1");
+        }
+
 }
 
-void question_And_Answer(string questionAns[][2], string your_answers[], int qa_length, int anslength, int *score) {
+
+
+void lecture_or_quiz(string lectures[][5], int l_length, int l_slength, string questionAns[0][2], string your_answers[], int qa_length, int anslength, int *score, bool *isFinished){
+string yes_no;
+
+
+    //green    \033[32m     \033[0m
+    //red      \033[31m
+    //blue     \033[34m
+    //cyan     \033[36m
+    //magenta  \033[35m
+    //yellow   \033[33m
+
+
+
+
+ do{
+            cout<<"\n\n\t\t\033[32mLecture(1) or Quiz(2)?:\033[0m ";
+            cin>>yes_no;
+
+            if(yes_no=="1"){
+                system("cls");
+                show_lectures(lectures, l_length, l_slength);
+
+            }
+
+            else if(yes_no=="2"){
+                system("cls");
+                question_And_Answer(questionAns, your_answers, qa_length, anslength, score, isFinished);
+            }
+
+            else{
+                cout<<"\n\n\t\t\033[31mTry again\033[0m\n\n";
+            }
+        }while(yes_no.length()!=1||(yes_no!="1"&&yes_no!="2"));
+
+}
+
+void question_And_Answer(string questionAns[][2], string your_answers[], int qa_length, int anslength, int *score, bool *isFinished) {
     int functionScore=0;
     string nexts;
     //green    \033[32m     \033[0m
@@ -312,6 +372,7 @@ void question_And_Answer(string questionAns[][2], string your_answers[], int qa_
         do {
             cout<<"\n\n\t\t\033[33mEnter Answer:\033[0m ";
             cin >> ans;
+            ans[0]=tolower(ans[0]);
             if (ans.length() != 1 || ans==""|| (ans != "a" && ans != "b" && ans != "c")) {
                 cout << "\n\t\t\033[31mINVALID\033[0m\n\t\t";
             }
@@ -340,16 +401,13 @@ void question_And_Answer(string questionAns[][2], string your_answers[], int qa_
         }while(next!="1");
     }
     system("cls");
-    cout<<"\n\n\n\n\t\tYour Score is "<<functionScore<<"/10\n\n";
-    //cout<<"\n\n\n\n\t\tYour Score is "<<*score<<"/10\n\n";
-    *score+=functionScore;
-     if(*score >= 30){
-            do{
-            cout<<"\n\n\t\tYOU COMPLETED THIS COURSE";
-            cin>>nexts;
-            }while(nexts!="1");
 
-            }
+    cout<<"\n\n\n\n\t\tYour Score is "<<functionScore<<"/10\n\n";
+    if(functionScore==10 && !(*isFinished)){
+        *score+=functionScore;
+        *isFinished=true;
+    }
+
 
     do{
         cout<<"\n\n\t\t\033[32mPress 1 to exit\033[0m\n\n\t\t";
@@ -367,7 +425,6 @@ void question_And_Answer(string questionAns[][2], string your_answers[], int qa_
 
 
 void show_lectures(string lectures[][5], int l_length, int l_slength){
-
     for(int i=0; i<l_length; i++){
 
         for(int j=0; j<l_slength; j++){
@@ -387,41 +444,7 @@ void show_lectures(string lectures[][5], int l_length, int l_slength){
 }
 
 
-void lecture_or_quiz(string lectures[][5], int l_length, int l_slength, string questionAns[0][2], string your_answers[], int qa_length, int anslength, int *score){
-string yes_no;
 
-
-    //green    \033[32m     \033[0m
-    //red      \033[31m
-    //blue     \033[34m
-    //cyan     \033[36m
-    //magenta  \033[35m
-    //yellow   \033[33m
-
-
-
-
- do{
-            cout<<"\n\n\t\t\033[32mLecture(1) or Quiz(2)?:\033[0m ";
-            cin>>yes_no;
-
-            if(yes_no=="1"){
-                system("cls");
-                show_lectures(lectures, l_length, l_slength);
-
-            }
-
-            else if(yes_no=="2"){
-                system("cls");
-                question_And_Answer(questionAns, your_answers, qa_length, anslength, score);
-            }
-
-            else{
-                cout<<"\n\n\t\t\033[31mTry again\033[0m\n\n";
-            }
-        }while(yes_no.length()!=1||(yes_no!="1"&&yes_no!="2"));
-
-}
 
 
 void gameName(){
@@ -437,6 +460,7 @@ void gameName(){
     cout<<"\n\n\t\t\t\t\t\033[36mM  O  N  T  A  G  E\033[0m";
     cout<<"\n\n\t\t\033[36m____________________________________________________________________\033[0m\n"<<endl;
     cout << "\n\t\t\t\t  "<<"\033[36mWELCOME TO THE FUNDAMENTALS OF C++\033[0m\n" << endl;
+
     }
 
 
