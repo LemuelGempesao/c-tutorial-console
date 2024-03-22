@@ -155,11 +155,14 @@ int main()
         int lectureColLen=sizeof(lectures[0])/ sizeof(lectures[0][0]);
 
         //ANSWER CONTAINER
+
         string your_answers[10];
         int anslength=sizeof(your_answers)/sizeof(your_answers[0]);
+        string resp;
 
         //INVOKE LECTURE OR QUIZ FUNCTION
         lecture_or_quiz(lectures,  lectureRowLen,  lectureColLen, questionAns, your_answers, qa_Row_Len, anslength, score, isFinished);
+
 
     }
 
@@ -252,29 +255,29 @@ void controlFlow(int *score, bool *isFinished){
             "\n\n\t\tWHLE LOOPS\n\n\t\t-The while loop takes a condition and repeats its statements\n\t\twhile the condition is true.\n\n\t\tSyntax:\n\n\t\twhile(condition) {\n\t\t  //code to be executed repeatedly\n\t\t  //as long as the condition is true\n\t\t}\n",
             "\n\n\t\tFor example:\n\n\t\tint num=1;\n\n\t\twhile(num<5) {\n\t\t cout << num; //displays 1234\n\t\t num=num+1;\n\t\t}\n\t\tThe statement num=num+1 increases the value of num by 1\n\t\teach time the loop runs or so called MODIFIERS.\n\n\t\tThis is important as without it the loop would run forever\n\n\t\t",
             "\n\n\t\tINCREMENT AND DECREMENT\n\n\t\t-As it's common to increment and decrement a value by 1 in loops.\n\t\tC++ provides a special increment and decrement operators.\n\n\t\tvar-- :decreases value of num by 1\n\t\tvar++ :increases value of num by 1\n\n\t\tFor example: (num = num+1 can be num++) or (num = num-1 can be num--)\n\t\t",
-            "\n\n\t\tSHORTHAND OPERATORS\n\n\t\t-Sometimes you might need to increase or decrease the value of a variable\n\t\tby a different value than 1.\n\t\tFor these cases C++ provides shorthand operators too!\n\n\t\tFor Example:\n\n\t\tint num = 0;\n\n\t\twhile(num <= 10) {\n\t\t  cout << num << endl;\n\t\t  num+=2;    //shorthand of num = num+2\n\t\t}\n\n\t\t//displays\n\t\t0\n\t\t2\n\t\t4\n\t\t6\n\t\t8\n\t\t10\n\nSimilarly you can use shorthand for other math operators (*=, /=, %= )\n"
+            "\n\n\t\tSHORTHAND OPERATORS\n\n\t\t-Sometimes you might need to increase or decrease the value of a variable\n\t\tby a different value than 1.\n\t\tFor these cases C++ provides shorthand operators too!\n\n\t\tFor Example:\n\n\t\tint num = 0;\n\n\t\twhile(num <= 10) {\n\t\t  cout << num << endl;\n\t\t  num+=2;    //shorthand of num = num+2\n\t\t}\n\n\t\t//displays\n\t\t0\n\t\t2\n\t\t4\n\t\t6\n\t\t8\n\t\t10\n\n\t\tSimilarly you can use shorthand for other math operators (*=, /=, %= )\n"
             },
 
 
-            {"\n\n\t\tCan You guess the output?\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main() {\n\n\t\t",
-            "\n\n\t\t",
-            "\n\n\t\tDO WHILE\n\n\t\t-Another variation of the while loop is do-while.\n\t\tThe difference with a while loop is that the condition is checked after the code,\n\t\tmeaning the code in the do is executed at least once even if the condition\n\t\tis false\n",
-            "\n\n\t\t",
-            "\n\n\t\t"
+            {"\n\n\t\tCan You guess the output?\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main() {\n\n\t\t  int number;\n\t\t  cin >> number; //assume you input 5\n\n\t\t  while(number >= 0) {\n\n\t\t    cout << number << endl;\n\t\t    number--;\n\n\t\t  }\n\n\t\t}\n",
+            "\n\n\t\tCan You guess the output?\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main() {\n\n\t\t  int number;\n\t\t  cin >> number; //assume you input 5\n\n\t\t  while(number >= 0) {\n\n\t\t    cout << number << endl;\n\t\t    number--;\n\n\t\t  }\n\n\t\t}\n\n\t\t//displays\n\n\t\t5\n\t\t4\n\t\t3\n\t\t2\n\t\t1\n\t\t0\n",
+            "\n\n\t\tDO WHILE\n\n\t\t-Another variation of the while loop is do-while.\n\t\tThe difference with a while loop is that the condition is checked after the code,\n\t\tmeaning the code in the do is executed at least once even if the condition\n\t\tis false\n\n\t\tSyntax:\n\n\t\tdo {\n\n\t\t  //code to be executed\n\t\t  //this code block will execute at least once\n\n\t\t} while (condition);\n\n\t\tFor Example:\n\n\t\tint  num = 0;\n\n\t\tdo{\n\n\t\t  cout << \"Hello \"; //displays Hello Hello Hello\n\t\t  num++;\n\n\t\t} while(num<3);",
+            "\n\n\t\tCan you guess the output?\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main() {\n\n\t\t  int number = 0;\n\n\t\t  do{\n\t\t    cout << num <<\" \";\n\t\t    num += 2;\n\t\t  }while(num <=5);\n\t\t}\n",
+            "\n\n\t\tCan you guess the output?\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main() {\n\n\t\t  int number = 0;\n\n\t\t  do{\n\t\t    cout << num <<\" \"; //dipslays 0 2 4\n\t\t    num += 2;\n\t\t  }while(num <=5);\n\t\t}\n"
             },
 
 
-            {"\n\t\t",
-            "",
-            "",
-            "",
-            ""
+            {"\n\n\t\tFOR LOOPS\n\n\t\t-A for loop is a control flow statement used to execute a block of code repeatedly\n\t\tbased on a specific condition.\n\n\t\tSyntax:\n\n\t\tfor (initialization; condition; increment/decrement) {\n\t\t  //code to be executed\n\t\t}\n",
+            "\n\n\t\tFOR LOOP HEADER\n\n\t\t-The loop header contains 3 components,\n\t\teach serves a specific purpose in controlling the behavior of the loop\n\n\t\tInitialization-Used to initialize a loop control variable, executed only once the loop starts ex. (int i = 0;)\n\n\t\tCondition - A boolean expression that's evaluated before each iteration, if condition is true,\n\t\tloop keeps executing, otherwise, the loop terminates (ex. i < 5;)\n\n\t\tIncrement/Decrement - Used to modify the loop control variable after each iteration. \n\t\tIt's optional and used to update loop control variable ex. (i++, i--, etc)",
+            "\n\n\t\tFor Example:\n\n\t\tfor (int i = 1; i<= 5; i++){\n\t\t  cout << i << \" \"; //displays 1 2 3 4 5\n\t\t}\n",
+            "\n\n\t\tCan you guess the output?\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main() {\n\n\t\t  for(int x=10; x>0; x--){\n\n\t\t    cout << x <<\" \";\n\n\t\t  }\n\t\t}\n",
+            "\n\n\t\tCan you guess the output?\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main() {\n\n\t\t  for(int x=10; x>0; x--){\n\n\t\t    cout << x <<\" \"; //displays 10 9 8 7 6 5 4 3 2 1\n\n\t\t  }\n\t\t}\n"
             },
 
-            {"\n\t\t",
-            "",
-            "",
-            "",
+            {"\n\n\t\tBREAK\n\n\t\t-Remember break; statement that was used in switch to stop when a case\n\t\twas matched? It can also be used to stop a loop\n\n\t\tFor Example:\n\n\t\tfor(int i=0; i<10; i++){\n\t\t  if(i==5) {\n\t\t    break;\n\t\t  }\n\t\t  cout << i <<\" \"; //displays 0 1 2 3 4 5 since break executed when i equals to 5 then the loop terminates\n\t\t}\n",
+            "\n\n\t\tCONTINUE\n\n\t\t-The continue statement skips the current loop iteration\n\t\tand continues with the next one\n\n\t\tFor Example:\n\n\t\tfor(int i=0; i<5; i++){\n\t\t  if(i==3) {\n\t\t  cout <<\"Skipping \"<<i<<endl;\n\t\t    continue;\n\t\t  }\n\t\t  cout << i <<endl;\n\n\t\t}\n\n\t\t//displays\n\t\t0\n\t\t1\n\t\t2\n\t\tSkipping 3\n\t\t4\n",
+            "\n\n\t\tBREAK AND CONTINUE IN ACTION\n\n\t\tfor(int i=10; i>=0; i--){\n\n\t\t  if(i==7) {\n\t\t    cout <<\"Skipping \"<<i<<endl;\n\t\t    continue;\n\t\t  }\n\n\t\t  if(i==6) {\n\t\t    break;\n\t\t  }\n\n\t\t cout << i <<endl;\n\n\t\t}\n\n\t\t//displays\n\t\t10\n\t\t9\n\t\t8\n\t\tSkipping 7\n",
+            "\n\n\t\tCan you guess the output?\n\n",
             ""
             }
         };
