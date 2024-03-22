@@ -49,17 +49,17 @@ int main()
 
         else if(choice=="3"){
 
-            if(score>=20  && l2_isFinished){
+            //if(score>=20  && l2_isFinished){
                 controlFlow(&score, &l3_isFinished);
                 break;
-            }
-            else{
-                cout <<"\n\n\n\t\tAttain a perfect score in lesson 2 to access this lesson\n\n\t\t";
-            }
+           // }
+           // else{
+                //cout <<"\n\n\n\t\tAttain a perfect score in lesson 2 to access this lesson\n\n\t\t";
+            //}
 
-        }
-        else {
-            cout<<"\n\n\t\tInvalid Choice\n\n";
+        //}
+        //else {
+           // cout<<"\n\n\t\tInvalid Choice\n\n";
 
         }
 
@@ -251,16 +251,16 @@ void controlFlow(int *score, bool *isFinished){
             {"\n\n\n\t\tLOOPS\n\n\t\t-A loop allows you to repeat a block of code multiple times.\n\t\tFor example, a game can use a loop through all items in the warehouse and perform calculations\n\n\t\t",
             "\n\n\t\tWHLE LOOPS\n\n\t\t-The while loop takes a condition and repeats its statements\n\t\twhile the condition is true.\n\n\t\tSyntax:\n\n\t\twhile(condition) {\n\t\t  //code to be executed repeatedly\n\t\t  //as long as the condition is true\n\t\t}\n",
             "\n\n\t\tFor example:\n\n\t\tint num=1;\n\n\t\twhile(num<5) {\n\t\t cout << num; //displays 1234\n\t\t num=num+1;\n\t\t}\n\t\tThe statement num=num+1 increases the value of num by 1\n\t\teach time the loop runs or so called MODIFIERS.\n\n\t\tThis is important as without it the loop would run forever\n\n\t\t",
-            "\n\n\t\tINCREMENT AND DECREMENT\n\n\t\t-As it's common to increment and decrement a value by 1 in loops.\n\t\tC++ provides a special increment and decrement operators.\n\n\t\tFor example: (num=num+1 can be num++) or (num=num-1 can be num--)",
-            ""
+            "\n\n\t\tINCREMENT AND DECREMENT\n\n\t\t-As it's common to increment and decrement a value by 1 in loops.\n\t\tC++ provides a special increment and decrement operators.\n\n\t\tvar-- :decreases value of num by 1\n\t\tvar++ :increases value of num by 1\n\n\t\tFor example: (num = num+1 can be num++) or (num = num-1 can be num--)\n\t\t",
+            "\n\n\t\tSHORTHAND OPERATORS\n\n\t\t-Sometimes you might need to increase or decrease the value of a variable\n\t\tby a different value than 1.\n\t\tFor these cases C++ provides shorthand operators too!\n\n\t\tFor Example:\n\n\t\tint num = 0;\n\n\t\twhile(num <= 10) {\n\t\t  cout << num << endl;\n\t\t  num+=2;    //shorthand of num = num+2\n\t\t}\n\n\t\t//displays\n\t\t0\n\t\t2\n\t\t4\n\t\t6\n\t\t8\n\t\t10\n\nSimilarly you can use shorthand for other math operators (*=, /=, %= )\n"
             },
 
 
-            {"\n\t\t",
-            "",
-            "",
-            "",
-            ""
+            {"\n\n\t\tCan You guess the output?\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main() {\n\n\t\t",
+            "\n\n\t\t",
+            "\n\n\t\tDO WHILE\n\n\t\t-Another variation of the while loop is do-while.\n\t\tThe difference with a while loop is that the condition is checked after the code,\n\t\tmeaning the code in the do is executed at least once even if the condition\n\t\tis false\n",
+            "\n\n\t\t",
+            "\n\n\t\t"
             },
 
 
