@@ -10,14 +10,14 @@ void basicConcepts(int *score, bool *sFinished);
 void conditionals(int *score, bool *isFinished);
 void loopings(int *score, bool *isFinished);
 void lecture_or_quiz(string lectures[][5], int lectureRowLen, int lectureColLen, string questionAns[0][2], string your_answers[], int qa_Row_Len, int anslength, int *score, bool *isFinished,string lessonName);
-void question_And_Answer(string questionAns[][2], string your_answers[], int qa_Row_Len, int anslength, int *score,bool *isFinished);
+void question_And_Answer(string questionAns[][2], string your_answers[], int qa_Row_Len, int anslength, int *score, bool *isFinished);
 void show_lectures(string lectures[][5], int lectureRowLen, int lectureColLen,string lessonName);
 
 
 
 int main(){
 
-    // MAIN SCORE
+    //MAIN SCORE
     int score=0;
 
     //TRIES
@@ -37,8 +37,8 @@ int main(){
 
         else if(choice=="2"){
            if(score>=10 && l1_isFinished){
-                conditionals(&score, &l2_isFinished );
-                break;
+            conditionals(&score, &l2_isFinished );
+            break;
           }
 
             else{
@@ -157,17 +157,6 @@ int main(){
 
 
     void conditionals(int *score, bool *isFinished){
-
-
-    //green    \033[32m     \033[0m
-    //red      \033[31m
-    //blue     \033[34m
-    //cyan     \033[36m
-    //magenta  \033[35m
-    //yellow   \033[33m
-
-
-
 
 
         string LessonName="\n\n\n\n\t\t\033[36mLESSON 2:\033[0m\n\n\t\t\033[31mCONDITIONALS\033[0m\n";
@@ -360,7 +349,7 @@ void question_And_Answer(string questionAns[][2], string your_answers[], int qa_
         cout << questionAns[i][0];
         string ans;
         do {
-            cout<<"\n\n\t\t\033[36mEnter Answer:\033[0m ";
+            cout<<"\n\n\t\t\033[36mEnter Answer (a, b, or c):\033[0m ";
             cin >> ans;
             ans[0]=tolower(ans[0]);
             if (ans==""|| (ans != "a" && ans != "b" && ans != "c" )) {
@@ -378,7 +367,7 @@ void question_And_Answer(string questionAns[][2], string your_answers[], int qa_
             }
 
         else{
-            cout<<"\n\t\t\033[31mWRONG\033[0m\n\n\t\t\033[36mThe answer is\033[0m:  "<<questionAns[i][1]<<"\n";
+            cout<<"\n\t\t\033[31mWRONG\033[0m\n\t\t"<<endl;;
             }
 
         do{
@@ -394,6 +383,13 @@ void question_And_Answer(string questionAns[][2], string your_answers[], int qa_
     cout<<"\n\n\n\n\t\t\033[36mYour Score is: \033[0m"<<"\033[36m"<<functionScore<<"\033[0m"<<"\033[36m/10\033[0m\n\n";
     if(functionScore==10 && !(*isFinished)){
         *score+=functionScore;
+
+        if(*score==10 && !(*isFinished)){
+            cout << "\n\t\t\033[33mYou Unlock Lesson 2\033[0m\n";
+        }
+        else if(*score==20){
+            cout << "\n\t\t\033[33mYou Unlock Lesson 3\033[0m\n";
+        }
         *isFinished=true;
     }
 
