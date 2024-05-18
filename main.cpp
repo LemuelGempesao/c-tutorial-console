@@ -1,75 +1,120 @@
+
 #include <iostream>
 #include <string>
 #include <cctype>
-
-
+#include <fstream>
 using namespace std;
+
+struct Player {
+    string name;
+    int score;
+    bool l1_finished;
+    bool l2_finished;
+    bool l3_finished;
+};
+
+const int MAX_PLAYERS = 100;
+int numPlayers = 0;
+Player players[MAX_PLAYERS];
+void loadPlayersFromFile();
+Player* findPlayerByName(const string& playerName);
+void savePlayersToFile();
 void gameName();
 string chooseLesson();
-void basicConcepts(int *score, bool *sFinished);
-void conditionals(int *score, bool *isFinished);
-void loopings(int *score, bool *isFinished);
-void lecture_or_quiz(string lectures[][5], int lectureRowLen, int lectureColLen, string questionAns[0][2], string your_answers[], int qa_Row_Len, int anslength, int *score, bool *isFinished,string lessonName);
-void question_And_Answer(string questionAns[][2], string your_answers[], int qa_Row_Len, int anslength, int *score, bool *isFinished);
+void basicConcepts(Player* currentPlayer );
+void conditionals(Player* currentPlayer );
+void loopings(Player* currentPlayer );
+void lecture_or_quiz(string lectures[][5], int lectureRowLen, int lectureColLen, string questionAns[0][2], string your_answers[], int qa_Row_Len, int anslength, Player* currentPlayer ,string lessonName);
+void question_And_Answer(string questionAns[][2], string your_answers[], int qa_Row_Len, int anslength, Player* currentPlayer );
 void show_lectures(string lectures[][5], int lectureRowLen, int lectureColLen,string lessonName);
+void addNewPlayer();
+void savePlayersToFile();
+void loadPlayersFromFile();
 
 
 
-int main(){
 
-    //MAIN SCORE
-    int score=0;
 
-    //TRIES
-    bool l1_isFinished=false, l2_isFinished=false, l3_isFinished=false;
+
+int main() {
+    loadPlayersFromFile();
+    string action;
+    string playerName;
     string choice;
+    gameName();
 
-    do{
-        gameName();
 
-        while(1){
-        choice=chooseLesson();
+    do {
 
-        if(choice=="1"){
-            basicConcepts(&score, &l1_isFinished);
-            break;
+        cout << "\n\n1. Add new player\n";
+        cout << "2. Play game\n";
+        cout << "3. Save and exit\n";
+        cout << "Enter your choice: ";
+        cin >> action;
+
+        if (action == "1") {
+            addNewPlayer();
         }
 
-        else if(choice=="2"){
-           if(score>=10 && l1_isFinished){
-            conditionals(&score, &l2_isFinished );
-            break;
-          }
 
-            else{
-               cout <<"\n\n\t\t\033[33mAttain a perfect score in lesson 1 to access this lesson\033[0m\n\n\t\t";
+        else if (action == "2") {
+            cout << "Enter player name: ";
+            cin >> playerName;
+            Player* currentPlayer = findPlayerByName(playerName);
+            if (currentPlayer) {
+                cout << "Current player: " << currentPlayer->name << endl;
+                gameName();
+                do {
+                    choice = chooseLesson();
+                    if (choice == "1") {
+                        basicConcepts(currentPlayer);
+                    }
+
+                    else if (choice == "2") {
+                        if (currentPlayer->score >= 10 && currentPlayer->l1_finished) {
+                            conditionals(currentPlayer);
+                        }
+
+                        else {
+                            cout << "\n\n\t\t\033[33mAttain a perfect score in lesson 1 to access this lesson\033[0m\n\n\t\t";
+                        }
+                    }
+
+                    else if (choice == "3") {
+                        if (currentPlayer->score >= 20 && currentPlayer->l2_finished) {
+                            loopings(currentPlayer);
+                        }
+
+                        else {
+                            cout << "\n\n\t\t\033[33mAttain a perfect score in lesson 2 to access this lesson\033[0m\n\n\t\t";
+                        }
+                    }
+
+                    else {
+                        cout << "\n\t\t\033[31mInvalid Choice\033[0m";
+                    }
+
+                } while (choice != "1" && choice != "2" && choice != "3");
             }
-
         }
 
-        else if(choice=="3"){
 
-            if(score>=20  && l2_isFinished){
-                loopings(&score, &l3_isFinished);
-                break;
-            }
-            else{
-                cout <<"\n\n\t\t\033[33mAttain a perfect score in lesson 2 to access this lesson\033[0m\n\n\t\t";
-            }
-
+        else if (action == "3") {
+            savePlayersToFile();
+            cout << "Player data saved. Exiting...\n";
         }
+
+
         else {
-            cout<<"\n\t\t\033[31mInvalid Choice\033[0m";
+            cout << "Invalid choice\n";
         }
-    }
-
-    }while(choice.length()==1|| choice!="1" && choice!="2" && choice!="3");
+    } while (action != "3");
 
     return 0;
 }
 
 
-    void basicConcepts(int *score, bool *isFinished ){
+    void basicConcepts(Player* currentPlayer ){
 
 
         string LessonName="\n\n\n\n\t\t\033[36mLESSON 1:\033[34m\n\n\t\t\033[34mBASIC CONCEPTS\033[0m\n";
@@ -150,13 +195,13 @@ int main(){
         int anslength=sizeof(your_answers)/sizeof(your_answers[0]);
 
         //INVOKE LECTURE OR QUIZ FUNCTION
-        lecture_or_quiz(lectures,  lectureRowLen,  lectureColLen, questionAns, your_answers, qa_Row_Len, anslength, score, isFinished, LessonName);
+        lecture_or_quiz(lectures,  lectureRowLen,  lectureColLen, questionAns, your_answers, qa_Row_Len, anslength, currentPlayer, LessonName);
 
 
     }
 
 
-    void conditionals(int *score, bool *isFinished){
+    void conditionals(Player* currentPlayer ){
 
 
         string LessonName="\n\n\n\n\t\t\033[36mLESSON 2:\033[0m\n\n\t\t\033[31mCONDITIONALS\033[0m\n";
@@ -234,12 +279,12 @@ int main(){
 
 
         //INVOKE LECTURE OR QUIZ FUNCTION
-        lecture_or_quiz(lectures,  lectureRowLen,  lectureColLen, questionAns, your_answers, qa_Row_Len, anslength, score, isFinished, LessonName);
+        lecture_or_quiz(lectures,  lectureRowLen,  lectureColLen, questionAns, your_answers, qa_Row_Len, anslength,currentPlayer , LessonName);
 
 }
 
 
-void loopings(int *score, bool *isFinished){
+void loopings(Player* currentPlayer){
 
         string LessonName="\n\n\n\n\t\t\033[36mLESSON 3:\033[0m\n\n\t\t\033[35mLOOPINGS\033[0m\n";
         string lectures[][5]={
@@ -301,20 +346,12 @@ void loopings(int *score, bool *isFinished){
         int anslength=sizeof(your_answers)/sizeof(your_answers[0]);
 
         //INVOKE LECTURE OR QUIZ FUNCTION
-        lecture_or_quiz(lectures,  lectureRowLen,  lectureColLen, questionAns, your_answers, qa_Row_Len, anslength, score, isFinished, LessonName);
-        string res;
-        if(*score==30){
-                cout<<"\n\n\n\n\n\n\t\t\033[33mYOU COMPLETED THIS COURSE\033[0m\n\n\t\t      \033[36mCONGRATS!!!!\033[0m\n";
-            do{
-                cout<<"\n\n\t\t\033[32mPress 1 to exit:\033[0m ";
-                cin>>res;
-            }while(res!="1");
-        }
+        lecture_or_quiz(lectures,  lectureRowLen,  lectureColLen, questionAns, your_answers, qa_Row_Len, anslength, currentPlayer , LessonName);
 
 }
 
 
-void lecture_or_quiz(string lectures[][5], int lectureRowLen, int lectureColLen, string questionAns[0][2], string your_answers[], int qa_Row_Len, int anslength, int *score, bool *isFinished, string lessonName){
+void lecture_or_quiz(string lectures[][5], int lectureRowLen, int lectureColLen, string questionAns[0][2], string your_answers[], int qa_Row_Len, int anslength, Player* currentPlayer , string lessonName){
 
 string yes_no;
 
@@ -330,7 +367,7 @@ string yes_no;
 
             else if(yes_no=="2"){
                 system("cls");
-                question_And_Answer(questionAns, your_answers, qa_Row_Len, anslength, score, isFinished);
+                question_And_Answer(questionAns, your_answers, qa_Row_Len, anslength, currentPlayer );
             }
 
             else{
@@ -340,7 +377,14 @@ string yes_no;
 
 }
 
-void question_And_Answer(string questionAns[][2], string your_answers[], int qa_Row_Len, int anslength, int *score, bool *isFinished) {
+void question_And_Answer(string questionAns[][2], string your_answers[], int qa_Row_Len, int anslength, Player* currentPlayer) {
+     string res;
+
+
+
+
+
+
     int functionScore=0;
     string reset;
     string next;
@@ -381,16 +425,32 @@ void question_And_Answer(string questionAns[][2], string your_answers[], int qa_
     system("cls");
 
     cout<<"\n\n\n\n\t\t\033[36mYour Score is: \033[0m"<<"\033[36m"<<functionScore<<"\033[0m"<<"\033[36m/10\033[0m\n\n";
-    if(functionScore==10 && !(*isFinished)){
-        *score+=functionScore;
+    if(functionScore==10 && !(currentPlayer->l1_finished)){
+        currentPlayer->score+=functionScore;
 
-        if(*score==10 && !(*isFinished)){
+        if(currentPlayer->score==10 && (!currentPlayer->l1_finished)){
             cout << "\n\t\t\033[33mYou Unlock Lesson 2\033[0m\n";
         }
-        else if(*score==20){
+
+        currentPlayer->l1_finished=true;
+    }
+
+    else if(functionScore==10 && !(currentPlayer->l2_finished)){
+        currentPlayer->score+=functionScore;
+
+        if(currentPlayer->score==20 && !(currentPlayer->l2_finished)){
             cout << "\n\t\t\033[33mYou Unlock Lesson 3\033[0m\n";
         }
-        *isFinished=true;
+        currentPlayer->l2_finished=true;
+    }
+
+    else if(functionScore==10 && !(currentPlayer->l3_finished)){
+        currentPlayer->score+=functionScore;
+        if(currentPlayer->score==30 && !(currentPlayer->l3_finished)){
+            system("cls");
+            cout<<"\n\n\n\n\n\n\t\t\033[33mYOU HAVE COMPLETED THIS COURSE\033[0m\n\n\t\t      \033[36mCONGRATS!!!!\033[0m\n";
+            currentPlayer->l3_finished=true;
+        }
     }
 
     do{
@@ -460,9 +520,9 @@ void show_lectures(string lectures[][5], int lectureRowLen, int lectureColLen, s
 
 
 void gameName(){
+
+
     system("cls");
-
-
     cout<<"\n\n\t\t\033[36m_____________________________________________________________________\033[0m\n\n"<<endl;
     cout <<"\n\n\t\t\t\t\033[36;46m* * * *\033[0m\t\t\033[36;46m**\033[0m\t        \033[36;46m**\033[0m\033[30m+\033[0m"<<endl;
     cout <<"    \t\t\t\t\033[36;46m**\033[0m     \t\t\033[36;46m**\033[0m\t        \033[36;46m**\033[0m\033[30m+\033[0m"<<endl;
@@ -487,5 +547,97 @@ void gameName(){
 
     }
 
+
+
+
+
+
+void addNewPlayer() {
+    string name;
+    if (numPlayers >= MAX_PLAYERS) {
+        cout << "Maximum number of players reached." << endl;
+        return;
+    }
+
+
+
+    cout << "Enter player name: ";
+    cin >> name;
+    for(int i = 0; i < numPlayers; i++){
+
+        if(name==players[i].name){
+            cout << "The name is already taken" <<endl;
+            return;
+        }
+    }
+
+
+            players[numPlayers].name = name;
+            players[numPlayers].score = 0;
+            players[numPlayers].l1_finished = false;
+            players[numPlayers].l2_finished = false;
+            players[numPlayers].l3_finished = false;
+            numPlayers++;
+            cout << "Player Successfully Added";
+
+
+}
+
+/*-----------------------------------------------------------------------------------------*/
+void savePlayersToFile() {
+    ofstream outputFile("player_datas.txt");
+    if (!outputFile) {
+        cerr << "Error: Unable to open file for writing." << endl;
+        return;
+    }
+
+    for (int i = 0; i < numPlayers; i++) {
+        outputFile << players[i].name << " " << players[i].score << " "
+                   << players[i].l1_finished << " " << players[i].l2_finished << " "
+                   << players[i].l3_finished << endl;
+    }
+
+    outputFile.close();
+}
+
+/*-----------------------------------------------------------------------------------------*/
+
+void loadPlayersFromFile() {
+    numPlayers = 0;
+
+    ifstream inputFile("player_datas.txt");
+    if (!inputFile) {
+        cerr << "No existing player data found. Starting with empty player list." << endl;
+        return;
+    }
+    inputFile.seekg(0, ios::end);
+    if (inputFile.tellg() == 0) {
+        cerr << "Notice: Player data file is empty." << endl;
+        return;
+    }
+    inputFile.seekg(0, ios::beg);
+
+    while (numPlayers < MAX_PLAYERS &&
+           inputFile >> players[numPlayers].name >> players[numPlayers].score
+                     >> players[numPlayers].l1_finished >> players[numPlayers].l2_finished
+                     >> players[numPlayers].l3_finished) {
+        numPlayers++;
+    }
+
+    inputFile.close();
+}
+
+
+Player* findPlayerByName(const string& playerName) {
+    for (int i = 0; i < numPlayers; i++) {
+        if (players[i].name == playerName) {
+            return &players[i];
+        }
+    }
+    cout << "Player not found. Add player to PLAY" << endl;
+    return 0;
+    }
+
+/*-----------------------------------------------------------------------------------------*/
 
 
