@@ -29,16 +29,14 @@ void show_lectures(string lectures[][5], int lectureRowLen, int lectureColLen,st
 void addNewPlayer();
 void savePlayersToFile();
 void loadPlayersFromFile();
+void initializeGame(Player* currentPlayer);
 
 
-
-string leaders[MAX_PLAYERS];
-string progress[MAX_PLAYERS];
 int main() {
 
     string action;
     string playerName;
-    string choice, res;
+    string res;
     loadPlayersFromFile();
 
 
@@ -61,48 +59,7 @@ int main() {
                 cin >> playerName;
                 Player* currentPlayer = findPlayerByName(playerName);
                 if (currentPlayer) {
-                    do {
-                        gameName();
-                        while(1){
-                            choice = chooseLesson(currentPlayer);
-                            if (choice == "1") {
-                                basicConcepts(currentPlayer);
-                                break;
-                            }
-
-                            else if (choice == "2") {
-                                if (currentPlayer->score >= 10 && currentPlayer->l1_finished) {
-                                    conditionals(currentPlayer);
-                                    break;
-                                }
-
-                                else {
-                                    cout << "\n\n\t\t\033[33mAttain a perfect score in lesson 1 to access this lesson\033[0m\n\n\t\t";
-                                }
-                            }
-
-                            else if (choice == "3") {
-                                if (currentPlayer->score >= 20 && currentPlayer->l2_finished) {
-                                    loopings(currentPlayer);
-                                    break;
-                                }
-
-                                else {
-                                    cout << "\n\n\t\t\033[33mAttain a perfect score in lesson 2 to access this lesson\033[0m\n\n\t\t";
-                                }
-                            }
-                            else if (choice == "4") {
-                                break;
-
-                            }
-
-
-                            else {
-                                cout << "\n\t\t\033[31mInvalid Choice\033[0m";
-                            }
-
-                        }
-                    } while (choice != "4");
+                   initializeGame(currentPlayer);
                     break;
                 }
                 do{
@@ -116,6 +73,7 @@ int main() {
 
 
             else if (action == "3") {
+                savePlayersToFile();
                 cout << "\n\t\t\t  \033[36m Player data saved. Exiting\033[0m ...\n";
                 break;
             }
@@ -644,4 +602,51 @@ Player* findPlayerByName(const string& playerName) {
     return 0;
     }
 
+
+
+void initializeGame(Player* currentPlayer ){
+    string choice;
+    do {
+       gameName();
+       while(1){
+       choice = chooseLesson(currentPlayer);
+            if (choice == "1") {
+                basicConcepts(currentPlayer);
+                break;
+            }
+
+            else if (choice == "2") {
+                if (currentPlayer->score >= 10 && currentPlayer->l1_finished) {
+                    conditionals(currentPlayer);
+                    break;
+                }
+
+                else {
+                    cout << "\n\n\t\t\033[33mAttain a perfect score in lesson 1 to access this lesson\033[0m\n\n\t\t";
+                }
+            }
+
+            else if (choice == "3") {
+                if (currentPlayer->score >= 20 && currentPlayer->l2_finished) {
+                    loopings(currentPlayer);
+                    break;
+                }
+
+                else {
+                    cout << "\n\n\t\t\033[33mAttain a perfect score in lesson 2 to access this lesson\033[0m\n\n\t\t";
+                }
+            }
+
+            else if (choice == "4") {
+                break;
+
+            }
+
+            else {
+                cout << "\n\t\t\033[31mInvalid Choice\033[0m";
+            }
+        }
+    } while (choice != "4");
+
+}
 
