@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <string>
 #include <cctype>
@@ -20,7 +19,7 @@ void loadPlayersFromFile();
 Player* findPlayerByName(const string& playerName);
 void savePlayersToFile();
 void gameName();
-string chooseLesson();
+string chooseLesson(Player *currentPlayer);
 void basicConcepts(Player* currentPlayer );
 void conditionals(Player* currentPlayer );
 void loopings(Player* currentPlayer );
@@ -33,90 +32,112 @@ void loadPlayersFromFile();
 
 
 
-
-
-
+string leaders[MAX_PLAYERS];
+string progress[MAX_PLAYERS];
 int main() {
-    loadPlayersFromFile();
+
     string action;
     string playerName;
-    string choice;
-    gameName();
+    string choice, res;
+    loadPlayersFromFile();
 
 
     do {
+        gameName();
+        while(1){
+            cout << "\n\n\t\t\t   \033[34mADD NEW PLAYER(1)\033[0m,";
+            cout << " \033[31mPLAY GAME(2)\033[0m,";
+            cout << " \033[35mSAVE AND EXIT(3)\033[0m\n\n";
+            cout << "\t\t\t   \033[32mEnter your choice(1, 2, 3)\033[0m: ";
+            cin >> action;
 
-        cout << "\n\n1. Add new player\n";
-        cout << "2. Play game\n";
-        cout << "3. Save and exit\n";
-        cout << "Enter your choice: ";
-        cin >> action;
+            if (action == "1") {
+                addNewPlayer();
+                savePlayersToFile();
+            }
 
-        if (action == "1") {
-            addNewPlayer();
-        }
+            else if (action == "2") {
+                cout << "\t\t\t   \033[32mEnter player name\033[0m: ";
+                cin >> playerName;
+                Player* currentPlayer = findPlayerByName(playerName);
+                if (currentPlayer) {
+                    do {
+                        gameName();
+                        while(1){
+                            choice = chooseLesson(currentPlayer);
+                            if (choice == "1") {
+                                basicConcepts(currentPlayer);
+                                break;
+                            }
+
+                            else if (choice == "2") {
+                                if (currentPlayer->score >= 10 && currentPlayer->l1_finished) {
+                                    conditionals(currentPlayer);
+                                    break;
+                                }
+
+                                else {
+                                    cout << "\n\n\t\t\033[33mAttain a perfect score in lesson 1 to access this lesson\033[0m\n\n\t\t";
+                                }
+                            }
+
+                            else if (choice == "3") {
+                                if (currentPlayer->score >= 20 && currentPlayer->l2_finished) {
+                                    loopings(currentPlayer);
+                                    break;
+                                }
+
+                                else {
+                                    cout << "\n\n\t\t\033[33mAttain a perfect score in lesson 2 to access this lesson\033[0m\n\n\t\t";
+                                }
+                            }
+                            else if (choice == "4") {
+                                break;
+
+                            }
 
 
-        else if (action == "2") {
-            cout << "Enter player name: ";
-            cin >> playerName;
-            Player* currentPlayer = findPlayerByName(playerName);
-            if (currentPlayer) {
-                cout << "Current player: " << currentPlayer->name << endl;
-                gameName();
-                do {
-                    choice = chooseLesson();
-                    if (choice == "1") {
-                        basicConcepts(currentPlayer);
-                    }
+                            else {
+                                cout << "\n\t\t\033[31mInvalid Choice\033[0m";
+                            }
 
-                    else if (choice == "2") {
-                        if (currentPlayer->score >= 10 && currentPlayer->l1_finished) {
-                            conditionals(currentPlayer);
                         }
+                    } while (choice != "4");
+                    break;
+                }
+                do{
+                    cout << "\n\t\t\t   \033[32mPress 1 to exit: \033[0m";
+                    cin >> res;
+                }while(res!="1");
+                break;
+            }
 
-                        else {
-                            cout << "\n\n\t\t\033[33mAttain a perfect score in lesson 1 to access this lesson\033[0m\n\n\t\t";
-                        }
-                    }
 
-                    else if (choice == "3") {
-                        if (currentPlayer->score >= 20 && currentPlayer->l2_finished) {
-                            loopings(currentPlayer);
-                        }
 
-                        else {
-                            cout << "\n\n\t\t\033[33mAttain a perfect score in lesson 2 to access this lesson\033[0m\n\n\t\t";
-                        }
-                    }
 
-                    else {
-                        cout << "\n\t\t\033[31mInvalid Choice\033[0m";
-                    }
+            else if (action == "3") {
+                cout << "\n\t\t\t  \033[36m Player data saved. Exiting\033[0m ...\n";
+                break;
+            }
 
-                } while (choice != "1" && choice != "2" && choice != "3");
+            else {
+                cout << "\t\t\t  \033[31m Invalid choice\033[0m \n";
             }
         }
 
-
-        else if (action == "3") {
-            savePlayersToFile();
-            cout << "Player data saved. Exiting...\n";
-        }
-
-
-        else {
-            cout << "Invalid choice\n";
-        }
     } while (action != "3");
 
     return 0;
 }
 
 
+
+
+
+//---------------------------------FUNCTIONS-------------------------------------------------
+
+
     void basicConcepts(Player* currentPlayer ){
-
-
         string LessonName="\n\n\n\n\t\t\033[36mLESSON 1:\033[34m\n\n\t\t\033[34mBASIC CONCEPTS\033[0m\n";
         string lectures[][5]= {
             {"\n\n\t\t\033[34mWELCOME TO C++\033[0m \n\n\t\t-C++ is one of the most popular programming languages.\n\t\tIt is used to build \033[36mgames\033[0m, \033[36moperating system\033[0m, \033[36mbrowsers\033[0m, and much more.\n",
@@ -149,7 +170,6 @@ int main() {
             "\n\n\t\t\033[34mFLOATING-TYPES\033[0m \n\n\t\t-Used to store numbers with decimal points\n\t\tExamples: \033[36mfloat\033[0m, \033[36mdouble\033[0m\n\n\n\t\t\033[34mExample:\033[0m\n\n\t\tfloat myFloat = 2.14f;\n\n\t\tcout << myFloat; \033[36m//dispays 2.14\033[0m\n",
             "\n\n\t\t\033[34mCHARACTERS\033[0m \n\n\t\t-Used to store single characters\n\t\tExample: \033[36mchar\033[0m\n\n\n\t\t\033[34mExample:\033[0m\n\n\t\tchar myGrade = 'A';\n\n\t\tcout << myGrade; \033[36m//displays A\033[0m\n",
             "\n\n\t\t\033[34mBOOLEANS\033[0m \n\n\t\t-Used to store true(1)or false(0) values\n\t\tExample: \033[36mbool\033[0m\n\n\n\t\t\033[34mExample:\033[0m\n\n\t\tbool am_I_handsome = true;\n\n\t\tcout<<am_I_handsome; \033[36m//displays 1 which is true\033[0m\n"},
-
 
 
             {"\n\n\n\t\t\033[34mARITHMETIC OPERATORS\033[0m \n\n\t\t-Used to perform arithmetic operations on numerical values(\033[36mAddition\033[0m, \033[36mSubtraction\033[0m, \n\t\t\033[36mMultiplication\033[0m, \033[36mDivision\033[0m or \033[36mModulus\033[0m)\n",
@@ -202,7 +222,6 @@ int main() {
 
 
     void conditionals(Player* currentPlayer ){
-
 
         string LessonName="\n\n\n\n\t\t\033[36mLESSON 2:\033[0m\n\n\t\t\033[31mCONDITIONALS\033[0m\n";
         string lectures[][5]= {
@@ -378,13 +397,7 @@ string yes_no;
 }
 
 void question_And_Answer(string questionAns[][2], string your_answers[], int qa_Row_Len, int anslength, Player* currentPlayer) {
-     string res;
-
-
-
-
-
-
+    string res;
     int functionScore=0;
     string reset;
     string next;
@@ -433,6 +446,7 @@ void question_And_Answer(string questionAns[][2], string your_answers[], int qa_
         }
 
         currentPlayer->l1_finished=true;
+        savePlayersToFile();
     }
 
     else if(functionScore==10 && !(currentPlayer->l2_finished)){
@@ -442,6 +456,7 @@ void question_And_Answer(string questionAns[][2], string your_answers[], int qa_
             cout << "\n\t\t\033[33mYou Unlock Lesson 3\033[0m\n";
         }
         currentPlayer->l2_finished=true;
+        savePlayersToFile();
     }
 
     else if(functionScore==10 && !(currentPlayer->l3_finished)){
@@ -450,6 +465,7 @@ void question_And_Answer(string questionAns[][2], string your_answers[], int qa_
             system("cls");
             cout<<"\n\n\n\n\n\n\t\t\033[33mYOU HAVE COMPLETED THIS COURSE\033[0m\n\n\t\t      \033[36mCONGRATS!!!!\033[0m\n";
             currentPlayer->l3_finished=true;
+            savePlayersToFile();
         }
     }
 
@@ -520,8 +536,6 @@ void show_lectures(string lectures[][5], int lectureRowLen, int lectureColLen, s
 
 
 void gameName(){
-
-
     system("cls");
     cout<<"\n\n\t\t\033[36m_____________________________________________________________________\033[0m\n\n"<<endl;
     cout <<"\n\n\t\t\t\t\033[36;46m* * * *\033[0m\t\t\033[36;46m**\033[0m\t        \033[36;46m**\033[0m\033[30m+\033[0m"<<endl;
@@ -537,57 +551,56 @@ void gameName(){
 
 
 
- string chooseLesson(){
-
+ string chooseLesson(Player *currentPlayer){
     string choice;
-    cout<<"\n\n\t\t\033[32mAVAILABLE TOPICS\033[0m: \033[34mBASIC CONCEPTS(1), \033[31mCONDITIONALS(2)\033[0m, \033[35mCONTROL FLOW(3)\033[0m";
-    cout<<"\n\n\t\t\033[32mEnter choice(1-3)\033[0m: ";
+    cout<<"\n\n\t\t\033[32mAVAILABLE TOPICS\033[0m: \033[34mBASIC CONCEPTS(1)\033[0m, \033[31mCONDITIONALS(2)\033[0m, \033[35mCONTROL FLOW(3)\033[0m, \033[36mEXIT(4)\033[0m";
+    cout<<"\n\n\t\t\033[32mCURRENT PLAYER\033[0m: " << currentPlayer->name;
+    cout<<"\n\n\t\t\033[32mEnter choice(1-4)\033[0m: ";
     cin>>choice;
     return choice;
 
     }
 
-
-
-
-
-
 void addNewPlayer() {
     string name;
     if (numPlayers >= MAX_PLAYERS) {
-        cout << "Maximum number of players reached." << endl;
+        cout << "\t\t\t   \033[31mMaximum number of players reached\033[0m." << endl;
         return;
     }
+    do{
+        cout << "\t\t\t   \033[32mEnter player name\033[0m: ";
+        cin >> name;
 
-
-
-    cout << "Enter player name: ";
-    cin >> name;
-    for(int i = 0; i < numPlayers; i++){
-
-        if(name==players[i].name){
-            cout << "The name is already taken" <<endl;
-            return;
+        if(name.length()<4){
+            cout << "\n\t\t\t   \033[33mYour chosen name is too short\033[0m\n" <<endl;
         }
+
+    }while(name.length()<4);
+
+    for(int i = 0; i < numPlayers; i++){
+        if(name==players[i].name){
+            cout << "\n\t\t\t   \033[33mThe name is already taken\033[0m" <<endl;
+            return;
+            }
     }
 
 
-            players[numPlayers].name = name;
-            players[numPlayers].score = 0;
-            players[numPlayers].l1_finished = false;
-            players[numPlayers].l2_finished = false;
-            players[numPlayers].l3_finished = false;
-            numPlayers++;
-            cout << "Player Successfully Added";
+    players[numPlayers].name = name;
+    players[numPlayers].score = 0;
+    players[numPlayers].l1_finished = false;
+    players[numPlayers].l2_finished = false;
+    players[numPlayers].l3_finished = false;
+    numPlayers++;
+    cout << "\n\t\t\t   \033[36mPlayer Successfully Added\033[0m\n";
+
 
 
 }
 
-/*-----------------------------------------------------------------------------------------*/
 void savePlayersToFile() {
     ofstream outputFile("player_datas.txt");
     if (!outputFile) {
-        cerr << "Error: Unable to open file for writing." << endl;
+        cerr << "\t\t\t   \033[31mError: Unable to open file for writing\033[0m." << endl;
         return;
     }
 
@@ -600,22 +613,16 @@ void savePlayersToFile() {
     outputFile.close();
 }
 
-/*-----------------------------------------------------------------------------------------*/
+
 
 void loadPlayersFromFile() {
     numPlayers = 0;
 
     ifstream inputFile("player_datas.txt");
     if (!inputFile) {
-        cerr << "No existing player data found. Starting with empty player list." << endl;
+        cerr << "\t\t\t   \033[33mNo existing player data found. Starting with empty player list\033[0m." << endl;
         return;
     }
-    inputFile.seekg(0, ios::end);
-    if (inputFile.tellg() == 0) {
-        cerr << "Notice: Player data file is empty." << endl;
-        return;
-    }
-    inputFile.seekg(0, ios::beg);
 
     while (numPlayers < MAX_PLAYERS &&
            inputFile >> players[numPlayers].name >> players[numPlayers].score
@@ -623,7 +630,6 @@ void loadPlayersFromFile() {
                      >> players[numPlayers].l3_finished) {
         numPlayers++;
     }
-
     inputFile.close();
 }
 
@@ -634,10 +640,8 @@ Player* findPlayerByName(const string& playerName) {
             return &players[i];
         }
     }
-    cout << "Player not found. Add player to PLAY" << endl;
+    cout << "\n\t\t\t   \033[33mPlayer not found. Add player to PLAY\033[0m" << endl;
     return 0;
     }
-
-/*-----------------------------------------------------------------------------------------*/
 
 
