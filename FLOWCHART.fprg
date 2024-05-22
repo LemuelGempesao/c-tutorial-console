@@ -4,20 +4,19 @@
         <attribute name="name" value=""/>
         <attribute name="authors" value="Administrator"/>
         <attribute name="about" value=""/>
-        <attribute name="saved" value="2024-05-19 05:47:46 PM"/>
+        <attribute name="saved" value="2024-05-22 03:41:57 PM"/>
         <attribute name="created" value="QWRtaW5pc3RyYXRvcjtXSU4tODdPNFE4MTlCU1U7MjAyNC0wMy0yMDswODoyOTo1NSBBTTszNjUw"/>
-        <attribute name="edited" value="QWRtaW5pc3RyYXRvcjtXSU4tODdPNFE4MTlCU1U7MjAyNC0wNS0xOTswNTo0Nzo0NiBQTTsxMzszODMx"/>
+        <attribute name="edited" value="QWRtaW5pc3RyYXRvcjtXSU4tODdPNFE4MTlCU1U7MjAyNC0wNS0yMjswMzo0MTo1NyBQTTsxOTszODI1"/>
     </attributes>
     <function name="Main" type="None" variable="">
         <parameters/>
         <body>
             <declare name="players" type="String" array="True" size="100"/>
-            <declare name="numPlayers" type="Integer" array="False" size=""/>
-            <assign variable="numPlayers" expression="0"/>
+            <declare name="scores" type="Integer" array="True" size="100"/>
+            <declare name="numPlayers" type="Integer" array="True" size="1"/>
+            <assign variable="numPlayers[0]" expression="0"/>
             <declare name="action" type="String" array="False" size=""/>
             <declare name="playerName" type="String" array="False" size=""/>
-            <declare name="res" type="Integer" array="False" size=""/>
-            <call expression="loadPlayersFromFile"/>
             <do expression="action != &quot;3&quot;">
                 <output expression="&quot;C++ MONTAGE&quot;" newline="True"/>
                 <output expression="&quot;Welcome the fundamentals of c++&quot;" newline="True"/>
@@ -26,12 +25,17 @@
                 <input variable="action"/>
                 <if expression="action == &quot;1&quot;">
                     <then>
-                        <call expression="addNewPlayer"/>
+                        <output expression="&quot;Enter Player Name&quot;" newline="True"/>
+                        <input variable="playerName"/>
+                        <call expression="addNewPlayer(playerName, numPlayers, players, scores)"/>
+                        <assign variable="numPlayers[0]" expression="numPlayers[0]+1"/>
                     </then>
                     <else>
                         <if expression="action == &quot;2&quot;">
                             <then>
-                                <call expression="initializeGame"/>
+                                <output expression="&quot;Enter Player Name&quot;" newline="True"/>
+                                <input variable="playername"/>
+                                <call expression="initializeGame(players, scores, playername, numPlayers)"/>
                             </then>
                             <else>
                                 <if expression="action == &quot;3&quot;">
@@ -48,8 +52,21 @@
         </body>
     </function>
     <function name="addNewPlayer" type="None" variable="">
-        <parameters/>
-        <body/>
+        <parameters>
+            <parameter name="playername" type="String" array="False"/>
+            <parameter name="numplayer" type="Integer" array="True"/>
+            <parameter name="players" type="String" array="True"/>
+            <parameter name="scores" type="Integer" array="True"/>
+        </parameters>
+        <body>
+            <declare name="num" type="Integer" array="False" size=""/>
+            <assign variable="num" expression="numplayer[0]"/>
+            <declare name="score" type="Integer" array="False" size=""/>
+            <assign variable="score" expression="0"/>
+            <assign variable="players[num]" expression="playername"/>
+            <assign variable="scores[num]" expression="score"/>
+            <output expression="&quot;Player added successfully&quot;" newline="True"/>
+        </body>
     </function>
     <function name="basicConcepts" type="None" variable="">
         <parameters/>
@@ -159,56 +176,119 @@
             </do>
         </body>
     </function>
-    <function name="findPlayerByName" type="None" variable="">
-        <parameters/>
-        <body/>
-    </function>
-    <function name="initializeGame" type="None" variable="">
-        <parameters/>
+    <function name="findPlayerByName" type="Integer" variable="pisti">
+        <parameters>
+            <parameter name="names" type="String" array="True"/>
+            <parameter name="scores" type="Integer" array="True"/>
+            <parameter name="name" type="String" array="False"/>
+            <parameter name="numPlayer" type="Integer" array="True"/>
+        </parameters>
         <body>
-            <declare name="choice" type="String" array="False" size=""/>
-            <do expression="choice != &quot;4&quot;">
-                <output expression="&quot;C++ MONTAGE&quot;" newline="True"/>
-                <output expression="&quot;Welcome the fundamentals of c++&quot;" newline="True"/>
-                <output expression="&quot;Available Topics: Basic Concepts(1), Conditionals(2), Control flow(3, Exit(4)&quot;" newline="True"/>
-                <output expression="&quot;Enter choice&quot;" newline="True"/>
-                <input variable="choice"/>
-                <if expression="choice==&quot;1&quot;">
+            <declare name="pisti" type="Integer" array="False" size=""/>
+            <declare name="num" type="Integer" array="False" size=""/>
+            <assign variable="num" expression="numPlayer[0]"/>
+            <declare name="start" type="Integer" array="False" size=""/>
+            <declare name="end" type="Integer" array="False" size=""/>
+            <assign variable="end" expression="num"/>
+            <output expression="names[0]" newline="True"/>
+            <for variable="start" start="0" end="end-1" direction="inc" step="1">
+                <if expression="(names[start] == name)">
                     <then>
-                        <output expression="&quot;WELCOME TO LESSON 1: BASIC CONCEPTS&quot;" newline="True"/>
-                        <call expression="basicConcepts"/>
+                        <output expression="&quot;namefound&quot;" newline="True"/>
+                        <assign variable="pisti" expression="scores[num-1]"/>
                     </then>
                     <else>
-                        <if expression="choice==&quot;2&quot;">
+                        <assign variable="pisti" expression="-1"/>
+                    </else>
+                </if>
+            </for>
+        </body>
+    </function>
+    <function name="initializeGame" type="None" variable="">
+        <parameters>
+            <parameter name="players" type="String" array="True"/>
+            <parameter name="scores" type="Integer" array="True"/>
+            <parameter name="name" type="String" array="False"/>
+            <parameter name="numPlayer" type="Integer" array="True"/>
+        </parameters>
+        <body>
+            <declare name="score" type="Integer" array="False" size=""/>
+            <assign variable="score" expression="findPlayerByName(players, scores, name, numPlayer)"/>
+            <if expression="score != -1">
+                <then>
+                    <declare name="choice" type="String" array="False" size=""/>
+                    <do expression="choice != &quot;4&quot;">
+                        <output expression="&quot;C++ MONTAGE&quot;" newline="True"/>
+                        <output expression="&quot;Welcome the fundamentals of c++&quot;" newline="True"/>
+                        <output expression="&quot;Available Topics: Basic Concepts(1), Conditionals(2), Control flow(3, Exit(4)&quot;" newline="True"/>
+                        <output expression="&quot;Enter choice&quot;" newline="True"/>
+                        <input variable="choice"/>
+                        <if expression="choice==&quot;1&quot;">
                             <then>
-                                <output expression="&quot;WELCOME TO LESSON 2: CONDITIONALS&quot;" newline="True"/>
-                                <call expression="conditionals"/>
+                                <output expression="&quot;WELCOME TO LESSON 1: BASIC CONCEPTS&quot;" newline="True"/>
+                                <call expression="basicConcepts"/>
                             </then>
                             <else>
-                                <if expression="choice==&quot;3&quot;">
+                                <if expression="choice==&quot;2&quot;">
                                     <then>
-                                        <output expression="&quot;WELCOME TO LESSON 3: CONTROL FLOW&quot;" newline="True"/>
-                                        <call expression="controlFlow"/>
+                                        <output expression="&quot;WELCOME TO LESSON 2: CONDITIONALS&quot;" newline="True"/>
+                                        <if expression="score == 20">
+                                            <then>
+                                                <call expression="conditionals"/>
+                                            </then>
+                                            <else>
+                                                <output expression="&quot;perfect quiz in lesson 1 to access this&quot;" newline="True"/>
+                                            </else>
+                                        </if>
                                     </then>
                                     <else>
-                                        <if expression="choice == &quot;4&quot;">
-                                            <then/>
+                                        <if expression="choice==&quot;3&quot;">
+                                            <then>
+                                                <output expression="&quot;WELCOME TO LESSON 3: CONTROL FLOW&quot;" newline="True"/>
+                                                <if expression="score == 30">
+                                                    <then>
+                                                        <call expression="controlFlow"/>
+                                                    </then>
+                                                    <else>
+                                                        <output expression="&quot;perfect quiz in lesson 2 to access this&quot;" newline="True"/>
+                                                    </else>
+                                                </if>
+                                            </then>
                                             <else>
-                                                <output expression="&quot;invalid&quot;" newline="True"/>
+                                                <if expression="choice == &quot;4&quot;">
+                                                    <then/>
+                                                    <else>
+                                                        <output expression="&quot;invalid&quot;" newline="True"/>
+                                                    </else>
+                                                </if>
                                             </else>
                                         </if>
                                     </else>
                                 </if>
                             </else>
                         </if>
-                    </else>
-                </if>
-            </do>
+                    </do>
+                </then>
+                <else>
+                    <output expression="&quot;name doesnt exist&quot;" newline="True"/>
+                </else>
+            </if>
         </body>
     </function>
-    <function name="loadPlayersFromFile" type="None" variable="">
+    <function name="loadPlayersFromFile" type="Integer" variable="data">
         <parameters/>
-        <body/>
+        <body>
+            <declare name="data" type="Integer" array="False" size=""/>
+            <open expression="(&quot;data.txt&quot;)" mode="read"/>
+            <read variable="data"/>
+            <if expression="!data">
+                <then>
+                    <output expression="&quot;empty&quot;" newline="True"/>
+                </then>
+                <else/>
+            </if>
+            <close mode="read"/>
+        </body>
     </function>
     <function name="questionAndAnswer" type="None" variable="">
         <parameters/>
