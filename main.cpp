@@ -15,9 +15,8 @@ struct Player {
 const int MAX_PLAYERS = 100;
 int numPlayers = 0;
 Player players[MAX_PLAYERS];
-void loadPlayersFromFile();
-Player* findPlayerByName(const string& playerName);
-void savePlayersToFile();
+
+//Game Flow Functions
 void gameName();
 string chooseLesson(Player *currentPlayer);
 void basicConcepts(Player* currentPlayer );
@@ -26,10 +25,14 @@ void loopings(Player* currentPlayer );
 void lecture_or_quiz(string lectures[][5], int lectureRowLen, int lectureColLen, string questionAns[0][2], string your_answers[], int qa_Row_Len, int anslength, Player* currentPlayer ,string lessonName);
 void question_And_Answer(string questionAns[][2], string your_answers[], int qa_Row_Len, int anslength, Player* currentPlayer );
 void show_lectures(string lectures[][5], int lectureRowLen, int lectureColLen,string lessonName);
+void initializeGame(Player* currentPlayer);
+
+//File and Data Handling Functions
+void loadPlayersFromFile();
 void addNewPlayer();
 void savePlayersToFile();
-void loadPlayersFromFile();
-void initializeGame(Player* currentPlayer);
+Player* findPlayerByName(const string& playerName);
+
 
 
 int main() {
@@ -94,7 +97,6 @@ int main() {
 
 //---------------------------------FUNCTIONS-------------------------------------------------
 
-
     void basicConcepts(Player* currentPlayer ){
         string LessonName="\n\n\n\n\t\t\033[36mLESSON 1:\033[34m\n\n\t\t\033[34mBASIC CONCEPTS\033[0m\n";
         string lectures[][5]= {
@@ -141,7 +143,7 @@ int main() {
             "\n\n\t\t\033[34mModulus\033[0m\n\n\t\t-This operator is also evaluated after multiplication and division\n\n\t\t\033[34mExample:\033[0m\n\n\t\tint result = 10+5%3;\n\n\t\tcout << result; \033[36m//displays 12\033[0m, (5 and 3 are evaluated first(5%3=2) then added to 10,(10+2=(\033[36m12\033[0m))\n",
             "\n\n\t\t\033[34mAddition and Subtraction\033[0m \n\n\t\t-These Operators have the same precedence and are evaluated left to right\n\n\t\t\033[34mExample:\033[0m\n\n\t\tint result = 10+5-3;\n\n\t\tcout << result; \033[36m//displays 12\033[0m, (10+5=15, 15-3=(\033[36m12\033[0m))",
             "\n\n\t\t\033[34mParenthesis\033[0m \n\n\t\t-Used to control the order of the operation.\n\t\tThey override the operator precedence rule.\n\t\tAllowing you to specify which parts should be evaluated together\n\n\t\tint result = (10+5)*2;\n\n\t\tcout << result; \033[36m//displays 30\033[0m, (10+5=15) (15*2=(\033[36m30\033[0m))\n\n\n\t\tint result=(10-5)*3;\n\n\t\tcout << result; \033[36m//displays 15\033[0m, (10-5=5), (5*3=(\033[36m15\033[0m))\n"
-            },
+            }
 
         };
 
@@ -377,13 +379,13 @@ void question_And_Answer(string questionAns[][2], string your_answers[], int qa_
 
 
         if (your_answers[i]==questionAns[i][1]){
-            cout<<"\n\t\t\033[32mCORRECT\033[0m\n";
+            //cout<<"\n\t\t\033[32mCORRECT\033[0m\n";
             functionScore++;
             }
 
-        else{
-            cout<<"\n\t\t\033[31mWRONG\033[0m\n\t\t"<<endl;;
-            }
+       // else{
+         //   cout<<"\n\t\t\033[32mWRONG\033[0m\n\t\t"<<endl;
+          //  }
 
         do{
             cout<<"\n\n\n\n\t\t\033[32mPress 1 to proceed\033[0m\n\t\t";
@@ -394,6 +396,19 @@ void question_And_Answer(string questionAns[][2], string your_answers[], int qa_
         }while(next!="1");
     }
     system("cls");
+
+    cout<<"\n\t\t\033[36mRESULTS: \033[0m\n";
+    for(int i = 0; i<10; i++){
+        if (your_answers[i]==questionAns[i][1]){
+        cout<<"\n\t\t" << i+1 << ". \033[32mCORRECT\033[0m\n";
+
+        }
+
+        else{
+            cout<<"\n\t\t" << i+1 << ". \033[31mWRONG\033[0m\n";
+        }
+
+    }
 
     cout<<"\n\n\n\n\t\t\033[36mYour Score is: \033[0m"<<"\033[36m"<<functionScore<<"\033[0m"<<"\033[36m/10\033[0m\n\n";
     if(functionScore==10 && !(currentPlayer->l1_finished)){
@@ -512,7 +527,8 @@ void gameName(){
  string chooseLesson(Player *currentPlayer){
     string choice;
     cout<<"\n\n\t\t\033[32mAVAILABLE TOPICS\033[0m: \033[34mBASIC CONCEPTS(1)\033[0m, \033[31mCONDITIONALS(2)\033[0m, \033[35mCONTROL FLOW(3)\033[0m, \033[36mEXIT(4)\033[0m";
-    cout<<"\n\n\t\t\033[32mCURRENT PLAYER\033[0m: " << currentPlayer->name;
+    cout<<"\n\n\t\t\033[32mCURRENT PLAYER\033[0m: "<<"\033[36m" << currentPlayer->name<<"\033[0m";
+    cout<<" \033[32mSCORE\033[0m: " <<"\033[36m"<< currentPlayer->score<<"\033[0m";
     cout<<"\n\n\t\t\033[32mEnter choice(1-4)\033[0m: ";
     cin>>choice;
     return choice;
