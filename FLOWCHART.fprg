@@ -4,19 +4,22 @@
         <attribute name="name" value=""/>
         <attribute name="authors" value="Administrator"/>
         <attribute name="about" value=""/>
-        <attribute name="saved" value="2024-05-22 03:41:57 PM"/>
+        <attribute name="saved" value="2024-05-24 12:41:49 PM"/>
         <attribute name="created" value="QWRtaW5pc3RyYXRvcjtXSU4tODdPNFE4MTlCU1U7MjAyNC0wMy0yMDswODoyOTo1NSBBTTszNjUw"/>
-        <attribute name="edited" value="QWRtaW5pc3RyYXRvcjtXSU4tODdPNFE4MTlCU1U7MjAyNC0wNS0yMjswMzo0MTo1NyBQTTsxOTszODI1"/>
+        <attribute name="edited" value="QWRtaW5pc3RyYXRvcjtXSU4tODdPNFE4MTlCU1U7MjAyNC0wNS0yNDsxMjo0MTo0OSBQTTszMjszODIz"/>
     </attributes>
     <function name="Main" type="None" variable="">
         <parameters/>
         <body>
+            <declare name="start" type="Integer" array="False" size=""/>
+            <assign variable="start" expression="0"/>
             <declare name="players" type="String" array="True" size="100"/>
             <declare name="scores" type="Integer" array="True" size="100"/>
             <declare name="numPlayers" type="Integer" array="True" size="1"/>
             <assign variable="numPlayers[0]" expression="0"/>
             <declare name="action" type="String" array="False" size=""/>
             <declare name="playerName" type="String" array="False" size=""/>
+            <call expression="loadPlayersFromFile(players, scores, numPlayers)"/>
             <do expression="action != &quot;3&quot;">
                 <output expression="&quot;C++ MONTAGE&quot;" newline="True"/>
                 <output expression="&quot;Welcome the fundamentals of c++&quot;" newline="True"/>
@@ -40,7 +43,7 @@
                             <else>
                                 <if expression="action == &quot;3&quot;">
                                     <then>
-                                        <call expression="savePlayersToFile"/>
+                                        <call expression="savePlayersToFile(players, scores, numPlayers)"/>
                                     </then>
                                     <else/>
                                 </if>
@@ -59,13 +62,31 @@
             <parameter name="scores" type="Integer" array="True"/>
         </parameters>
         <body>
+            <declare name="validate" type="Boolean" array="False" size=""/>
+            <assign variable="validate" expression="false"/>
+            <declare name="start" type="Integer" array="False" size=""/>
+            <assign variable="start" expression="0"/>
             <declare name="num" type="Integer" array="False" size=""/>
             <assign variable="num" expression="numplayer[0]"/>
             <declare name="score" type="Integer" array="False" size=""/>
             <assign variable="score" expression="0"/>
-            <assign variable="players[num]" expression="playername"/>
             <assign variable="scores[num]" expression="score"/>
-            <output expression="&quot;Player added successfully&quot;" newline="True"/>
+            <for variable="start" start="0" end="num-1" direction="inc" step="1">
+                <if expression="players[start] == playername">
+                    <then>
+                        <output expression="&quot;name is already taken&quot;" newline="True"/>
+                        <assign variable="validate" expression="true"/>
+                    </then>
+                    <else/>
+                </if>
+            </for>
+            <if expression="validate == true">
+                <then/>
+                <else>
+                    <assign variable="players[num]" expression="playername"/>
+                    <output expression="&quot;Player added successfully&quot;" newline="True"/>
+                </else>
+            </if>
         </body>
     </function>
     <function name="basicConcepts" type="None" variable="">
@@ -176,7 +197,7 @@
             </do>
         </body>
     </function>
-    <function name="findPlayerByName" type="Integer" variable="pisti">
+    <function name="findPlayerByName" type="Integer" variable="playerScore">
         <parameters>
             <parameter name="names" type="String" array="True"/>
             <parameter name="scores" type="Integer" array="True"/>
@@ -184,24 +205,36 @@
             <parameter name="numPlayer" type="Integer" array="True"/>
         </parameters>
         <body>
-            <declare name="pisti" type="Integer" array="False" size=""/>
+            <declare name="playerScore" type="Integer" array="False" size=""/>
+            <assign variable="playerScore" expression="-1"/>
             <declare name="num" type="Integer" array="False" size=""/>
             <assign variable="num" expression="numPlayer[0]"/>
             <declare name="start" type="Integer" array="False" size=""/>
+            <assign variable="start" expression="0"/>
             <declare name="end" type="Integer" array="False" size=""/>
             <assign variable="end" expression="num"/>
-            <output expression="names[0]" newline="True"/>
-            <for variable="start" start="0" end="end-1" direction="inc" step="1">
-                <if expression="(names[start] == name)">
-                    <then>
-                        <output expression="&quot;namefound&quot;" newline="True"/>
-                        <assign variable="pisti" expression="scores[num-1]"/>
-                    </then>
-                    <else>
-                        <assign variable="pisti" expression="-1"/>
-                    </else>
-                </if>
-            </for>
+            <if expression="numPlayer[0]==0">
+                <then>
+                    <output expression="&quot;add Player to play&quot;" newline="True"/>
+                </then>
+                <else>
+                    <for variable="start" start="0" end="num-1" direction="inc" step="1">
+                        <if expression="names[start] == name">
+                            <then>
+                                <output expression="&quot;namefound&quot;" newline="True"/>
+                                <assign variable="playerScore" expression="start"/>
+                            </then>
+                            <else/>
+                        </if>
+                    </for>
+                    <if expression="playerScore == -1">
+                        <then>
+                            <output expression="&quot;Name Do not Exist&quot;" newline="True"/>
+                        </then>
+                        <else/>
+                    </if>
+                </else>
+            </if>
         </body>
     </function>
     <function name="initializeGame" type="None" variable="">
@@ -214,8 +247,9 @@
         <body>
             <declare name="score" type="Integer" array="False" size=""/>
             <assign variable="score" expression="findPlayerByName(players, scores, name, numPlayer)"/>
-            <if expression="score != -1">
-                <then>
+            <if expression="score == -1">
+                <then/>
+                <else>
                     <declare name="choice" type="String" array="False" size=""/>
                     <do expression="choice != &quot;4&quot;">
                         <output expression="&quot;C++ MONTAGE&quot;" newline="True"/>
@@ -268,25 +302,65 @@
                             </else>
                         </if>
                     </do>
-                </then>
-                <else>
-                    <output expression="&quot;name doesnt exist&quot;" newline="True"/>
                 </else>
             </if>
         </body>
     </function>
-    <function name="loadPlayersFromFile" type="Integer" variable="data">
-        <parameters/>
+    <function name="loadNames" type="None" variable="data">
+        <parameters>
+            <parameter name="names" type="String" array="True"/>
+            <parameter name="numPlayer" type="Integer" array="True"/>
+        </parameters>
         <body>
+            <declare name="start" type="Integer" array="False" size=""/>
+            <assign variable="start" expression="0"/>
+            <declare name="data" type="String" array="False" size=""/>
+            <open expression="(&quot;Namedata.txt&quot;)" mode="read"/>
+            <if expression="eof()">
+                <then/>
+                <else/>
+            </if>
+            <while expression="not eof()">
+                <read variable="data"/>
+                <assign variable="names[start]" expression="data"/>
+                <assign variable="start" expression="start+1"/>
+            </while>
+            <close mode="read"/>
+        </body>
+    </function>
+    <function name="loadPlayersFromFile" type="None" variable="">
+        <parameters>
+            <parameter name="players" type="String" array="True"/>
+            <parameter name="scores" type="Integer" array="True"/>
+            <parameter name="numPlayers" type="Integer" array="True"/>
+        </parameters>
+        <body>
+            <call expression="loadNames(players, numPlayers)"/>
+            <call expression="loadScore(scores, numPlayers)"/>
+        </body>
+    </function>
+    <function name="loadScore" type="None" variable="data">
+        <parameters>
+            <parameter name="scores" type="Integer" array="True"/>
+            <parameter name="numPlayer" type="Integer" array="True"/>
+        </parameters>
+        <body>
+            <declare name="start" type="Integer" array="False" size=""/>
+            <assign variable="start" expression="0"/>
             <declare name="data" type="Integer" array="False" size=""/>
-            <open expression="(&quot;data.txt&quot;)" mode="read"/>
-            <read variable="data"/>
-            <if expression="!data">
+            <open expression="(&quot;Scoredata.txt&quot;)" mode="read"/>
+            <if expression="eof()">
                 <then>
                     <output expression="&quot;empty&quot;" newline="True"/>
                 </then>
                 <else/>
             </if>
+            <while expression="not eof()">
+                <read variable="data"/>
+                <assign variable="scores[start]" expression="data"/>
+                <assign variable="numPlayer[0]" expression="numPlayer[0]+1"/>
+                <assign variable="start" expression="start+1"/>
+            </while>
             <close mode="read"/>
         </body>
     </function>
@@ -337,8 +411,53 @@
             <output expression="score" newline="True"/>
         </body>
     </function>
+    <function name="saveName" type="None" variable="">
+        <parameters>
+            <parameter name="names" type="String" array="True"/>
+            <parameter name="numPlayers" type="Integer" array="True"/>
+        </parameters>
+        <body>
+            <declare name="start" type="Integer" array="False" size=""/>
+            <assign variable="start" expression="0"/>
+            <declare name="end" type="Integer" array="False" size=""/>
+            <assign variable="end" expression="numPlayers[0]"/>
+            <declare name="score" type="Integer" array="False" size=""/>
+            <declare name="name" type="Integer" array="False" size=""/>
+            <open expression="(&quot;Namedata.txt&quot;)" mode="write"/>
+            <for variable="start" start="0" end="end-1" direction="inc" step="1">
+                <write expression="names[start]"/>
+            </for>
+            <close mode="write"/>
+        </body>
+    </function>
     <function name="savePlayersToFile" type="None" variable="">
-        <parameters/>
-        <body/>
+        <parameters>
+            <parameter name="players" type="String" array="True"/>
+            <parameter name="scores" type="Integer" array="True"/>
+            <parameter name="numPlayers" type="Integer" array="True"/>
+        </parameters>
+        <body>
+            <call expression="saveName(players, numPlayers)"/>
+            <call expression="saveScore(scores, numPlayers)"/>
+        </body>
+    </function>
+    <function name="saveScore" type="None" variable="">
+        <parameters>
+            <parameter name="scores" type="Integer" array="True"/>
+            <parameter name="numPlayers" type="Integer" array="True"/>
+        </parameters>
+        <body>
+            <declare name="start" type="Integer" array="False" size=""/>
+            <assign variable="start" expression="0"/>
+            <declare name="end" type="Integer" array="False" size=""/>
+            <assign variable="end" expression="numPlayers[0]"/>
+            <declare name="score" type="Integer" array="False" size=""/>
+            <declare name="name" type="Integer" array="False" size=""/>
+            <open expression="(&quot;Scoredata.txt&quot;)" mode="write"/>
+            <for variable="start" start="0" end="end-1" direction="inc" step="1">
+                <write expression="scores[start]"/>
+            </for>
+            <close mode="write"/>
+        </body>
     </function>
 </flowgorithm>
