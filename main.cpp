@@ -55,6 +55,12 @@ int main() {
             if (action == "1") {
                 addNewPlayer();
                 savePlayersToFile();
+                do{
+                    cout << "\n\t\t\t   \033[32mPress 1 to exit: \033[0m";
+                    cin >> res;
+                }while(res!="1");
+                break;
+
             }
 
             else if (action == "2") {
@@ -82,7 +88,12 @@ int main() {
             }
 
             else {
-                cout << "\t\t\t  \033[31m Invalid choice\033[0m \n";
+                cout << "\n\t\t\t  \033[31m Invalid choice\033[0m \n";
+                    do{
+                    cout << "\n\t\t\t   \033[32mPress 1 to exit: \033[0m";
+                    cin >> res;
+                }while(res!="1");
+                break;
             }
         }
 
@@ -212,7 +223,7 @@ int main() {
             "\n\n\t\t\033[34mHere's our previous example, written using else if:\033[0m\n\n\t\tint age=24;\n\n\t\tif(age >= 65) {\n\t\t  cout<<\"SENIOR\";\n\t\t}\n\t\telse if (age >= 18){\n\t\t  cout<<\"ADULT\";\n\t\t}\n\t\telse{\n\t\t  cout<<\"CHILD\";\n\t\t}\n\t\t",
             "\n\n\t\t\033[34mCan you guess the output?\033[0m\n\t\t\033[36mAssume user enters 'B'\033[0m\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main() {\n\n\t\t  int points;\n\t\t  char category;\n\n\t\t  cout<<\"Enter Category(A, B, C)\";\n\t\t  cin>>category;\n\n\t\t  if (category == 'A'){\n\t\t    points=100;\n\t\t  }\n\n\t\t  else if(category =='B'){\n\t\t    points=70;\n\n\t\t  }\n\n\t\t  else {\n\t\t    points=50;\n\t\t  }\n\n\t\t  cout<<points;\n\n\t\t  return 0;\n\n\t\t}\n\t\t",
             "\n\n\t\t\033[34mCan you guess the output?\033[0m\n\t\t\033[36mAssume user enters 'B'\033[0m\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main() {\n\n\t\t  int points;\n\t\t  char category;\n\n\t\t  cout<<\"Enter Category(A, B, C)\";\n\t\t  cin>>category;\n\n\t\t  if (category == 'A'){\n\t\t    points=100;\n\t\t  }\n\n\t\t  else if(category =='B'){\n\t\t    points=70;\n\n\t\t  }\n\n\t\t  else {\n\t\t    points=50;\n\t\t  }\n\n\t\t  cout<<points; \033[36m//Displays 70\033[0m\n\n\t\t  return 0;\n\n\t\t}\n\t\t",
-            "\n\n\t\t\033[34mLESSON TAKEAWAYS\033[0m\n\n\t\t-Decision making is easy right?\n\t\tYou can check for a condition using the if statement.\n\t\tIn case the condition of if statement is false, the code in an else if statement can be executed to test for another condition.\n\n\t\tAnd if the all the conditions are false else statement is executed\n\n\t\t"
+            "\n\n\t\t\033[34mLESSON TAKEAWAYS\033[0m\n\n\t\t-Decision making is easy right?\n\t\tYou can check for a condition using the if statement.\n\t\tIn case the condition of if statement is false, the code in an else if statement can be executed to test \n\t\tfor another condition.\n\n\t\tAnd if the all the conditions are false, else statement is executed\n\n\t\t"
             },
 
              {"\n\n\n\t\t\033[34mSWITCH STATEMENT\033[0m\n\n\t\t-The switch statement can be used to check for equality against a list of (int and char) values, \n\t\tinstead of multiple else if statements.\n\n\t\tSyntax:\n\n\t\tswitch (expression or variable) {\n\n\t\t  case constant1:\n\t\t    //some code\n\t\t    break;\n\t\t  case constant2:\n\t\t    //some code\n\t\t    break;\n\t\t  //more cases as needed\n\t\t  default:\n\t\t    //some code\n\t\t    break;\n\t\t}\n\n\t\t\033[34mExample:\033[0m\n\n\t\tint choice=2;\n\n\t\t  switch(choice) {\n\t\t    case 1:\n\t\t      cout << \"Coffee\";\n\t\t    case 2:\n\t\t      cout << \"Tea\"; \033[36m//displays \"Tea\" since choice matches with this case(2)\033[0m\n\t\t    case 3:\n\t\t      cout <<\"Water\";\n\t\t    default:\n\t\t      cout << \"Empty\";\n\t\t  }\n\t\t",
@@ -361,8 +372,12 @@ void question_And_Answer(string questionAns[][2], string your_answers[], int qa_
     int functionScore=0;
     string reset;
     string next;
+
     for (int i = 0; i < qa_Row_Len; i++) {
         system("cls");
+        if(i==0){
+            cout<<"\n\n\t\t\033[36mMULTIPLE CHOICE\033[0m: \033[33mAttain a perfect score to unlock next lessons\033[0m \n";
+        }
         cout << questionAns[i][0];
         string ans;
         do {
@@ -379,13 +394,8 @@ void question_And_Answer(string questionAns[][2], string your_answers[], int qa_
 
 
         if (your_answers[i]==questionAns[i][1]){
-            //cout<<"\n\t\t\033[32mCORRECT\033[0m\n";
             functionScore++;
             }
-
-       // else{
-         //   cout<<"\n\t\t\033[32mWRONG\033[0m\n\t\t"<<endl;
-          //  }
 
         do{
             cout<<"\n\n\n\n\t\t\033[32mPress 1 to proceed\033[0m\n\t\t";
@@ -536,6 +546,7 @@ void gameName(){
     }
 
 void addNewPlayer() {
+    string res;
     string name;
     if (numPlayers >= MAX_PLAYERS) {
         cout << "\t\t\t   \033[31mMaximum number of players reached\033[0m." << endl;
@@ -549,7 +560,12 @@ void addNewPlayer() {
             cout << "\n\t\t\t   \033[33mYour chosen name is too short\033[0m\n" <<endl;
         }
 
-    }while(name.length()<4);
+        else if(name.length() > 10){
+            cout << "\n\t\t\t   \033[33mYour chosen name exceeds  the required length(10) \033[0m\n" <<endl;
+        }
+
+
+    }while(name.length()<4 || name.length() >10);
 
     for(int i = 0; i < numPlayers; i++){
         if(name==players[i].name){
@@ -621,7 +637,7 @@ Player* findPlayerByName(const string& playerName) {
 
 
 void initializeGame(Player* currentPlayer ){
-    string choice;
+    string choice, res;
     do {
        gameName();
        while(1){
@@ -639,6 +655,11 @@ void initializeGame(Player* currentPlayer ){
 
                 else {
                     cout << "\n\n\t\t\033[33mAttain a perfect score in lesson 1 to access this lesson\033[0m\n\n\t\t";
+                    do{
+                        cout << "\n\t\t\033[32mPress 1 to exit: \033[0m";
+                        cin >> res;
+                }while(res!="1");
+                break;
                 }
             }
 
@@ -650,6 +671,11 @@ void initializeGame(Player* currentPlayer ){
 
                 else {
                     cout << "\n\n\t\t\033[33mAttain a perfect score in lesson 2 to access this lesson\033[0m\n\n\t\t";
+                    do{
+                        cout << "\n\t\t\033[32mPress 1 to exit: \033[0m";
+                        cin >> res;
+                }while(res!="1");
+                break;
                 }
             }
 
@@ -660,6 +686,11 @@ void initializeGame(Player* currentPlayer ){
 
             else {
                 cout << "\n\t\t\033[31mInvalid Choice\033[0m";
+                    do{
+                    cout << "\n\t\t\033[32mPress 1 to exit: \033[0m";
+                    cin >> res;
+                }while(res!="1");
+                break;
             }
         }
     } while (choice != "4");
