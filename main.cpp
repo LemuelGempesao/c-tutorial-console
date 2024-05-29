@@ -2,6 +2,9 @@
 #include <string>
 #include <cctype>
 #include <fstream>
+#include <algorithm> // For std::shuffle
+#include <random>    // For std::default_random_engine
+#include <ctime>
 using namespace std;
 
 struct Player {
@@ -26,6 +29,7 @@ void lecture_or_quiz(string lectures[][5], int lectureRowLen, int lectureColLen,
 void question_And_Answer(string questionAns[][2], string your_answers[], int qa_Row_Len, int anslength, Player* currentPlayer );
 void show_lectures(string lectures[][5], int lectureRowLen, int lectureColLen,string lessonName);
 void initializeGame(Player* currentPlayer);
+void shuffle_array(string arr[10][2], int n);
 
 //File and Data Handling Functions
 void loadPlayersFromFile();
@@ -50,14 +54,17 @@ int main() {
             cout << " \033[31mPLAY GAME(2)\033[0m,";
             cout << " \033[35mSAVE AND EXIT(3)\033[0m\n\n";
             cout << "\t\t\t   \033[32mEnter your choice(1, 2, 3)\033[0m: ";
-            cin >> action;
+            getline(cin, action);
+            action.erase(remove(action.begin(), action.end(), ' '), action.end());
 
             if (action == "1") {
                 addNewPlayer();
                 savePlayersToFile();
                 do{
                     cout << "\n\t\t\t   \033[32mPress 1 to exit: \033[0m";
-                    cin >> res;
+                    getline(cin, res);
+                    res.erase(remove(res.begin(), res.end(), ' '), res.end());
+
                 }while(res!="1");
                 break;
 
@@ -65,7 +72,8 @@ int main() {
 
             else if (action == "2") {
                 cout << "\t\t\t   \033[32mEnter player name\033[0m: ";
-                cin >> playerName;
+                getline(cin, playerName);
+                playerName.erase(remove(playerName.begin(), playerName.end(), ' '), playerName.end());
                 Player* currentPlayer = findPlayerByName(playerName);
                 if (currentPlayer) {
                    initializeGame(currentPlayer);
@@ -73,7 +81,8 @@ int main() {
                 }
                 do{
                     cout << "\n\t\t\t   \033[32mPress 1 to exit: \033[0m";
-                    cin >> res;
+                    getline(cin, res);
+                    res.erase(remove(res.begin(), res.end(), ' '), res.end());
                 }while(res!="1");
                 break;
             }
@@ -91,7 +100,8 @@ int main() {
                 cout << "\n\t\t\t  \033[31m Invalid choice\033[0m \n";
                     do{
                     cout << "\n\t\t\t   \033[32mPress 1 to exit: \033[0m";
-                    cin >> res;
+                    getline(cin, res);
+                    res.erase(remove(res.begin(), res.end(), ' '), res.end());
                 }while(res!="1");
                 break;
             }
@@ -159,16 +169,16 @@ int main() {
         };
 
         string questionAns[][2]= {
-            {"\n\n\t\t\033[36m1. Which statements are true about C++?\033[0m:\n\n\t\tI.C++ is not a programming language\n\t\tII. C++ can be used to build games.\n\t\tIII.C++ is good for operating systems or browsers development\n\n\t\ta. I only\n\t\tb. II and III\n\t\tc. all of the statements: \n\t\t", "b"},
-            {"\n\n\t\t\033[36m2. Find the missing structure\033[0m\n\n\t\t#include <_____>\n\t\tusing namespace std;\n\n\t\tint main(){\n\t\t  cout << \"Hello World\";\n\n\t\t  return 0;\n\n\t\t}\n\n\t\ta.stdio.h\n\t\tb.iostrim\n\t\tc.iostream\n\t\t", "c"},
-            {"\n\n\t\t\033[36m3. This Program returns an error why?\033[0m\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main(){\n\n\t\t  string programmingLanguage = \"C++\";\n\n\t\t  cout << programminglanguage;\n\n\t\t  return 0;\n\n\t\t}:\n\n\t\ta.Calling an incorrect Case of Identifier\n\t\tb.data type should be int\n\t\tc.No semicolon\n\t\t", "a"},
-            {"\n\n\t\t\033[36m4. Determine if its a valid or invalid identifier\033[0m\n\n\t\tfirst name\n\n\t\ta.valid\n\t\tb.invalid\n\t\tc.hard to tell\n\t\t", "b"},
-            {"\n\n\t\t\033[36m5. Guess the output\033[0m\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main(){\n\n\t\t int myGrade = 99;\n\n\t\t cout << \"myGrade\";\n\n\t\t return 0;\n\n\t\t}\n\n\t\ta.99\n\t\tb.error\n\t\tc.myGrade\n\t\t", "c"},
-            {"\n\n\t\t\033[36m6. Determine data type suitable for this data.\033[0m\n\n\t\tThe number of days in a year:\n\n\t\ta.int\n\t\tb.float\n\t\tc.string\n\t\t", "a"},
-            {"\n\n\t\t\033[36m7. (7-10)Determine the value of the following expression\033[0m\n\n\t\t3+6*7\n\n\t\ta.46\n\t\tb.56\n\t\tc.45\n\t\t", "c"},
-            {"\n\n\t\t\033[36m8. 50%30\033[0m\n\n\t\ta.20\n\t\tb.1\n\t\tc.50/30\n\t\t", "a"},
-            {"\n\n\t\t\033[36m9. 10*(2+3)\033[0m\n\n\t\ta.23\n\t\tb.50\n\t\tc.15\n\t\t", "b"},
-            {"\n\n\t\t\033[36m10. 3*4/6+6\033[0m\n\n\t\ta.1\n\t\tb.8\n\t\tc.6\n\t\t", "b"}
+            {"\033[36mWhich statements are true about C++?\033[0m:\n\n\t\tI.C++ is not a programming language\n\t\tII. C++ can be used to build games.\n\t\tIII.C++ is good for operating systems or browsers development\n\n\t\ta. I only\n\t\tb. II and III\n\t\tc. all of the statements: \n\t\t", "b"},
+            {"\033[36mFind the missing structure\033[0m\n\n\t\t#include <_____>\n\t\tusing namespace std;\n\n\t\tint main(){\n\t\t  cout << \"Hello World\";\n\n\t\t  return 0;\n\n\t\t}\n\n\t\ta.stdio.h\n\t\tb.iostrim\n\t\tc.iostream\n\t\t", "c"},
+            {"\033[36mThis Program returns an error why?\033[0m\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main(){\n\n\t\t  string programmingLanguage = \"C++\";\n\n\t\t  cout << programminglanguage;\n\n\t\t  return 0;\n\n\t\t}:\n\n\t\ta.Calling an incorrect Case of Identifier\n\t\tb.data type should be int\n\t\tc.No semicolon\n\t\t", "a"},
+            {"\033[36mDetermine if its a valid or invalid identifier\033[0m\n\n\t\tfirst name\n\n\t\ta.valid\n\t\tb.invalid\n\t\tc.hard to tell\n\t\t", "b"},
+            {"\033[36mGuess the output\033[0m\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main(){\n\n\t\t int myGrade = 99;\n\n\t\t cout << \"myGrade\";\n\n\t\t return 0;\n\n\t\t}\n\n\t\ta.99\n\t\tb.error\n\t\tc.myGrade\n\t\t", "c"},
+            {"\033[36mDetermine data type suitable for this data.\033[0m\n\n\t\tThe number of days in a year:\n\n\t\ta.int\n\t\tb.float\n\t\tc.string\n\t\t", "a"},
+            {"\033[36m(7-10)Determine the value of the following expression\033[0m\n\n\t\t3+6*7\n\n\t\ta.46\n\t\tb.56\n\t\tc.45\n\t\t", "c"},
+            {"\033[36m50%30\033[0m\n\n\t\ta.20\n\t\tb.1\n\t\tc.50/30\n\t\t", "a"},
+            {"\033[36m10*(2+3)\033[0m\n\n\t\ta.23\n\t\tb.50\n\t\tc.15\n\t\t", "b"},
+            {"\033[36m3*4/6+6\033[0m\n\n\t\ta.1\n\t\tb.8\n\t\tc.6\n\t\t", "b"}
                 };
 
 
@@ -243,16 +253,16 @@ int main() {
         };
 
         string questionAns[][2]= {
-            {"\n\n\t\t\033[36m1. In C++ what command use to take input from the user?\033[0m\n\n\t\ta. cout\n\t\tb. scanf \n\t\tc. cin\n\t\t", "c"},
-            {"\n\n\t\t\033[36m2. Determine the output\033[0m\n\n\t\tstring name;\n\n\t\tcout<<\"Enter name \";\n\t\tcin>>name; //lets assume you type BJARNE\n\n\t\tcout<<\"Your name is: \"<<name;\n\n\t\ta. You entered: BJARNE\n\t\tb. Your name is: BJARNE\n\t\tc. You are BJARNE", "b"},
-            {"\n\n\t\t\033[36m3. Supply the missing code\033[0m\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main(){\n\n\t\t int day=7;\n\n\t\t __(day==7){\n\t\t cout<<\"Sunday\"; //displays \"Sunday\"\n\n\t\t}\n\n\t\t return 0;\n\n\t\t}\n\n\t\ta. if\n\t\tb. else\n\t\tc. else if", "a"},
-            {"\n\n\t\t\033[36m4. Determine the Output\033[0m\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main(){\n\n\t\t int num=8;\n\n\t\t  if(num%2==0){\n\t\t   cout << \"EVEN\";\n\n\t\t  }\n\n\t\t  else{\n\t\t    cout << \"ODD\";\n\n\t\t  }\n\n\t\t return 0;\n\n\t\t}\n\n\t\ta. EVEN\n\t\tb. ODD\n\t\tc. 0", "a"},
-            {"\n\n\t\t\033[36m5. Which of the following statements is true about nested if-else statements\033[0m\n\n\t\ta. They cannot be used in c++\n\t\tb. They can have one if statement and multiple else statement\n\t\tc. They can have multiple if and else statement with each other", "c"},
-            {"\n\n\t\t\033[36m6. What data type is commonly used in switch cases?\033[0m\n\n\t\ta. int\n\t\tb. floats\n\t\tc. string\n\t\t", "a"},
-            {"\n\n\t\t\033[36m7. Determine the output?\033[0m\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main() {\n\t\t  int order = 4;\n\n\t\t  switch(choice) {\n\t\t    case 1:\n\t\t      cout << \"Rice with egg\";\n\t\t    case 2:\n\t\t      cout << \"Rice with ham\";\n\t\t    case 3:\n\t\t      cout << \"Rice with pork\";\n\t\t    default:\n\t\t      cout << \"Water\"\n\t\t  }\n\t\t}\n\n\t\ta. Rice with egg\n\t\tb. Water\n\t\tc. Rice with ham", "b"},
-            {"\n\n\t\t\033[36m8. In C++ what symbol is used for logical OR operator?\033[0m\n\n\t\ta. &&\n\t\tb. or\n\t\tc. ||", "c"},
-            {"\n\n\t\t\033[36m9. Complete the missing code to run the program\033[0m\n\n\t\tint day=13;\n\n\t\tif (day>=1 __ day<=12){\n\t\t  cout <<\"Valid Month;\n\n\t\telse{\n\t\t  cout << \"Invalid month\"; //displays \"Invalid month\";\n\t\t}\n\n\t\ta. ||\n\t\tb. !\n\t\tc. &&\n", "c"},
-            {"\n\n\t\t\033[36m10. guess the output?\033[0m\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main() {\n\n\t\t  int age;\n\t\t  cin >> age; //assume user enters 5\n\n\t\t  if(age >0 && age <=3){ \n\t\t    cout << \"Free Meal\";\n\t\t  }\n\n\t\t  else if (age >= 4 && age <=6) {\n\t\t    cout << \"Discounted Meal\";\n\t\t  }\n\n\t\t  else{\n\t\t    cout << \"Normal\";\n\t\t  }\n\t\t}\n\n\t\ta. Free Meal\n\t\tb. Discounted Meal\n\t\tc. Normal\n", "b"}
+            {"\033[36mIn C++ what command use to take input from the user?\033[0m\n\n\t\ta. cout\n\t\tb. scanf \n\t\tc. cin\n\t\t", "c"},
+            {"\033[36mDetermine the output\033[0m\n\n\t\tstring name;\n\n\t\tcout<<\"Enter name \";\n\t\tcin>>name; //lets assume you type BJARNE\n\n\t\tcout<<\"Your name is: \"<<name;\n\n\t\ta. You entered: BJARNE\n\t\tb. Your name is: BJARNE\n\t\tc. You are BJARNE", "b"},
+            {"\033[36mSupply the missing code\033[0m\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main(){\n\n\t\t int day=7;\n\n\t\t __(day==7){\n\t\t cout<<\"Sunday\"; //displays \"Sunday\"\n\n\t\t}\n\n\t\t return 0;\n\n\t\t}\n\n\t\ta. if\n\t\tb. else\n\t\tc. else if", "a"},
+            {"\033[36mDetermine the Output\033[0m\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main(){\n\n\t\t int num=8;\n\n\t\t  if(num%2==0){\n\t\t   cout << \"EVEN\";\n\n\t\t  }\n\n\t\t  else{\n\t\t    cout << \"ODD\";\n\n\t\t  }\n\n\t\t return 0;\n\n\t\t}\n\n\t\ta. EVEN\n\t\tb. ODD\n\t\tc. 0", "a"},
+            {"\033[36mWhich of the following statements is true about nested if-else statements\033[0m\n\n\t\ta. They cannot be used in c++\n\t\tb. They can have one if statement and multiple else statement\n\t\tc. They can have multiple if and else statement with each other", "c"},
+            {"\033[36mWhat data type is commonly used in switch cases?\033[0m\n\n\t\ta. int\n\t\tb. floats\n\t\tc. string\n\t\t", "a"},
+            {"\033[36mDetermine the output?\033[0m\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main() {\n\t\t  int order = 4;\n\n\t\t  switch(choice) {\n\t\t    case 1:\n\t\t      cout << \"Rice with egg\";\n\t\t    case 2:\n\t\t      cout << \"Rice with ham\";\n\t\t    case 3:\n\t\t      cout << \"Rice with pork\";\n\t\t    default:\n\t\t      cout << \"Water\"\n\t\t  }\n\t\t}\n\n\t\ta. Rice with egg\n\t\tb. Water\n\t\tc. Rice with ham", "b"},
+            {"\033[36mIn C++ what symbol is used for logical OR operator?\033[0m\n\n\t\ta. &&\n\t\tb. or\n\t\tc. ||", "c"},
+            {"\033[36mComplete the missing code to run the program\033[0m\n\n\t\tint day=13;\n\n\t\tif (day>=1 __ day<=12){\n\t\t  cout <<\"Valid Month;\n\n\t\telse{\n\t\t  cout << \"Invalid month\"; //displays \"Invalid month\";\n\t\t}\n\n\t\ta. ||\n\t\tb. !\n\t\tc. &&\n", "c"},
+            {"\033[36mguess the output?\033[0m\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main() {\n\n\t\t  int age;\n\t\t  cin >> age; //assume user enters 5\n\n\t\t  if(age >0 && age <=3){ \n\t\t    cout << \"Free Meal\";\n\t\t  }\n\n\t\t  else if (age >= 4 && age <=6) {\n\t\t    cout << \"Discounted Meal\";\n\t\t  }\n\n\t\t  else{\n\t\t    cout << \"Normal\";\n\t\t  }\n\t\t}\n\n\t\ta. Free Meal\n\t\tb. Discounted Meal\n\t\tc. Normal\n", "b"}
             };
 
         //QA ROW LENGTH AND COLUMN LENGTH
@@ -309,16 +319,16 @@ void loopings(Player* currentPlayer){
             }
         };
         string questionAns[][2]= {
-                            {"\n\n\t\t\033[36m1. It isa C++ construct that allows you to repeat a block of code multiple times?\033[0m\n\n\t\ta. loop\n\t\tb. conditionals\n\t\tc. variable\n", "a"},
-                            {"\n\n\t\t\033[36m2. Supply the missing code\033[0m\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main() {\n\n\t\t  int number;\n\t\t  cin >> number; //assume you input 5\n\n\t\t  ____(number >= 0) {\n\n\t\t    cout << number <<\" \"; //displays 5 4 3 2 1 0\n\t\t    number--;\n\n\t\t  }\n\n\t\t}\n\n\t\ta. for\n\t\tb. while\n\t\tc. do\n", "b"},
-                            {"\n\n\t\t\033[36m3. What loop construct in C++ guarantees that the loop body is executed at least once,\n\t\teven if the condition is false initially?\033[0m\n\n\t\ta. while loop\n\t\tb. for loop\n\t\tc. do while\n", "c"},
-                            {"\n\n\t\t\033[36m4. Determine the output\033[0m\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main() {\n\n\t\t  int num = 0;\n\n\t\t  do{\n\t\t    cout << num <<\" \";\n\t\t    num += 3;\n\t\t  }while(num <=12);\n\t\t}\n\n\t\ta. 0,3,6,9,12\n\t\tb. 0 3 6 9 12\n\t\tc. 036912\n", "b"},
-                            {"\n\n\t\t\033[36m5. What loop that contains header loop component (initialization; condition; update)?\033[0m\n\n\t\ta. for loop\n\t\tb. do while\n\t\tc. while\n", "a"},
-                            {"\n\n\t\t\033[36m6. Determine the output\033[0m\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main() {\n\n\t\t  for(int x=12; x>0; x-=4){\n\n\t\t    cout << x <<\" \";\n\n\t\t  }\n\t\t}\n\n\t\ta. 4 8 12\n\t\tb. 8 4\n\t\tc. 12 8 4\n", "c"},
-                            {"\n\n\t\t\033[36m7. What statement that can be used to stop a loop\033[0m\n\n\t\ta. break;\n\t\tb. stop;\n\t\tc. endl;\n", "a"},
-                            {"\n\n\t\t\033[36m8. What statement that skips the current loop iteration and continues with the next one\033[0m\n\n\t\ta. skip;\n\t\tb. continue;\n\t\tc. next;\n", "b"},
-                            {"\n\n\t\t\033[36m9. Supply the missing code\033[0m\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main() {\n\n\t\t  for(int x=10; x>0; ___){\n\n\t\t    cout << x <<\" \"; //displays 10 9 8 7 6 5 4 3 2 1\n\n\t\t  }\n\t\t}\n\t\ta. x+=2\n\t\tb. x++\n\t\tc. x--\n", "c"},
-                            {"\n\n\t\t\033[36m10. Determine the Output\033[0m\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main() {\n\n\t\t  for(int x=0; x<=20; x+=4){\n\n\t\t    if(x == 12) {\n\t\t      cout << \"skip\"<<endl;\n\t\t      continue;\n\t\t    }\n\n\t\t    if(x ==16) {\n\t\t    break;\n\t\t    }\n\n\t\t  cout << x <<\" \";\n\n\t\t  }\n\t\t}\n\n\t\ta. 0 4 8 skip\n\t\tb. 0 4 8 12 skip\n\t\tc. 0 4 8 12 16 20\n", "a"}
+                            {"\033[36mIt is a C++ construct that allows you to repeat a block of code multiple times?\033[0m\n\n\t\ta. loop\n\t\tb. conditionals\n\t\tc. variable\n", "a"},
+                            {"\033[36mSupply the missing code\033[0m\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main() {\n\n\t\t  int number;\n\t\t  cin >> number; //assume you input 5\n\n\t\t  ____(number >= 0) {\n\n\t\t    cout << number <<\" \"; //displays 5 4 3 2 1 0\n\t\t    number--;\n\n\t\t  }\n\n\t\t}\n\n\t\ta. for\n\t\tb. while\n\t\tc. do\n", "b"},
+                            {"\033[36mWhat loop construct in C++ guarantees that the loop body is executed at least once,\n\t\teven if the condition is false initially?\033[0m\n\n\t\ta. while loop\n\t\tb. for loop\n\t\tc. do while\n", "c"},
+                            {"\033[36mDetermine the output\033[0m\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main() {\n\n\t\t  int num = 0;\n\n\t\t  do{\n\t\t    cout << num <<\" \";\n\t\t    num += 3;\n\t\t  }while(num <=12);\n\t\t}\n\n\t\ta. 0,3,6,9,12\n\t\tb. 0 3 6 9 12\n\t\tc. 036912\n", "b"},
+                            {"\033[36mWhat loop that contains header loop component (initialization; condition; update)?\033[0m\n\n\t\ta. for loop\n\t\tb. do while\n\t\tc. while\n", "a"},
+                            {"\033[36mDetermine the output\033[0m\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main() {\n\n\t\t  for(int x=12; x>0; x-=4){\n\n\t\t    cout << x <<\" \";\n\n\t\t  }\n\t\t}\n\n\t\ta. 4 8 12\n\t\tb. 8 4\n\t\tc. 12 8 4\n", "c"},
+                            {"\033[36mWhat statement that can be used to stop a loop\033[0m\n\n\t\ta. break;\n\t\tb. stop;\n\t\tc. endl;\n", "a"},
+                            {"\033[36mWhat statement that skips the current loop iteration and continues with the next one\033[0m\n\n\t\ta. skip;\n\t\tb. continue;\n\t\tc. next;\n", "b"},
+                            {"\033[36mSupply the missing code\033[0m\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main() {\n\n\t\t  for(int x=10; x>0; ___){\n\n\t\t    cout << x <<\" \"; //displays 10 9 8 7 6 5 4 3 2 1\n\n\t\t  }\n\t\t}\n\t\ta. x+=2\n\t\tb. x++\n\t\tc. x--\n", "c"},
+                            {"\033[36mDetermine the Output\033[0m\n\n\t\t#include <iostream>\n\t\tusing namespace std;\n\n\t\tint main() {\n\n\t\t  for(int x=0; x<=20; x+=4){\n\n\t\t    if(x == 12) {\n\t\t      cout << \"skip\"<<endl;\n\t\t      continue;\n\t\t    }\n\n\t\t    if(x ==16) {\n\t\t    break;\n\t\t    }\n\n\t\t  cout << x <<\" \";\n\n\t\t  }\n\t\t}\n\n\t\ta. 0 4 8 skip\n\t\tb. 0 4 8 12 skip\n\t\tc. 0 4 8 12 16 20\n", "a"}
 
             };
 
@@ -347,7 +357,8 @@ string yes_no;
 
  do{
             cout<<"\n\n\t\t\033[32mLecture(1) or Quiz(2)?:\033[0m ";
-            cin>>yes_no;
+            getline(cin, yes_no);
+            yes_no.erase(remove(yes_no.begin(), yes_no.end(), ' '), yes_no.end());
 
             if(yes_no=="1"){
                 system("cls");
@@ -373,16 +384,19 @@ void question_And_Answer(string questionAns[][2], string your_answers[], int qa_
     string reset;
     string next;
 
+    shuffle_array(questionAns, qa_Row_Len);
+
     for (int i = 0; i < qa_Row_Len; i++) {
         system("cls");
         if(i==0){
             cout<<"\n\n\t\t\033[36mMULTIPLE CHOICE\033[0m: \033[33mAttain a perfect score to unlock next lessons\033[0m \n";
         }
-        cout << questionAns[i][0];
+        cout <<"\n\n\t\t"<< i+1 <<". "<<questionAns[i][0];
         string ans;
         do {
             cout<<"\n\n\t\t\033[36mEnter Answer (a, b, or c):\033[0m ";
-            cin >> ans;
+            getline(cin, ans);
+            ans.erase(remove(ans.begin(), ans.end(), ' '), ans.end());
             ans[0]=tolower(ans[0]);
             if (ans==""|| (ans != "a" && ans != "b" && ans != "c" )) {
                 cout << "\n\t\t\033[31mINVALID\033[0m\t\t";
@@ -399,12 +413,14 @@ void question_And_Answer(string questionAns[][2], string your_answers[], int qa_
 
         do{
             cout<<"\n\n\n\n\t\t\033[32mPress 1 to proceed\033[0m\n\t\t";
-            cin>>next;
+            getline(cin, next);
+            next.erase(remove(next.begin(), next.end(), ' '), next.end());
             if(next!="1"){
                 cout<<"\n\t\t\033[31mTry Again\033[0m\t\t";
             }
         }while(next!="1");
     }
+
     system("cls");
 
     cout<<"\n\t\t\033[36mRESULTS: \033[0m\n";
@@ -419,6 +435,7 @@ void question_And_Answer(string questionAns[][2], string your_answers[], int qa_
         }
 
     }
+
 
     cout<<"\n\n\n\n\t\t\033[36mYour Score is: \033[0m"<<"\033[36m"<<functionScore<<"\033[0m"<<"\033[36m/10\033[0m\n\n";
     if(functionScore==10 && !(currentPlayer->l1_finished)){
@@ -454,7 +471,8 @@ void question_And_Answer(string questionAns[][2], string your_answers[], int qa_
 
     do{
         cout<<"\n\n\t\t\033[32mPress 1 to exit\033[0m\n\n\t\t";
-        cin>>reset;
+        getline(cin, reset);
+        reset.erase(remove(reset.begin(), reset.end(), ' '), reset.end());
 
         if(reset!="1"){
             cout<<"\n\n\t\t\033[31mTry again\033[0m\n\n\t\t";
@@ -465,6 +483,7 @@ void question_And_Answer(string questionAns[][2], string your_answers[], int qa_
         }
 
     }while(reset!="1");
+
 }
 
 
@@ -474,7 +493,9 @@ void show_lectures(string lectures[][5], int lectureRowLen, int lectureColLen, s
 
     do{cout<<lessonName;
     cout <<"\n\n\n\n\t\t\033[32mPress any key to begin lesson:\033[0m ";
-    cin>>begins;
+    getline(cin, begins);
+    begins.erase(remove(begins.begin(), begins.end(), ' '), begins.end());
+
     break;
     }while(1);
 
@@ -485,7 +506,9 @@ void show_lectures(string lectures[][5], int lectureRowLen, int lectureColLen, s
 
             do{
                 cout<<"\n\n\t\t\033[32mPress (1)Proceed or (2)Exit\n\t\t>\033[0m ";
-                cin>>ans;
+                getline(cin, ans);
+                ans.erase(remove(ans.begin(), ans.end(), ' '), ans.end());
+
                 if(ans!="1" && ans!="2"){
                     cout<<"\n\t\t\033[31mtry again\033[0m\n";
                 }
@@ -540,7 +563,9 @@ void gameName(){
     cout<<"\n\n\t\t\033[32mCURRENT PLAYER\033[0m: "<<"\033[36m" << currentPlayer->name<<"\033[0m";
     cout<<" \033[32mSCORE\033[0m: " <<"\033[36m"<< currentPlayer->score<<"\033[0m";
     cout<<"\n\n\t\t\033[32mEnter choice(1-4)\033[0m: ";
-    cin>>choice;
+    getline(cin, choice);
+    choice.erase(remove(choice.begin(), choice.end(), ' '), choice.end());
+
     return choice;
 
     }
@@ -554,7 +579,9 @@ void addNewPlayer() {
     }
     do{
         cout << "\t\t\t   \033[32mEnter player name\033[0m: ";
-        cin >> name;
+        getline(cin, name);
+        name.erase(remove(name.begin(), name.end(), ' '), name.end());
+
 
         if(name.length()<4){
             cout << "\n\t\t\t   \033[33mYour chosen name is too short\033[0m\n" <<endl;
@@ -694,6 +721,16 @@ void initializeGame(Player* currentPlayer ){
             }
         }
     } while (choice != "4");
+
+}
+
+
+void shuffle_array(string arr[10][2], int n) {
+    // Use the current time as the seed for the random number generator
+    unsigned seed = static_cast<unsigned>(std::time(nullptr));
+
+    // Shuffling the array
+    shuffle(arr, arr + n, default_random_engine(seed));
 
 }
 
