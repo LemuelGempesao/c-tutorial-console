@@ -2,8 +2,8 @@
 #include <string>
 #include <cctype>
 #include <fstream>
-#include <algorithm> // For std::shuffle
-#include <random>    // For std::default_random_engine
+#include <algorithm>
+#include <random>
 #include <ctime>
 using namespace std;
 
@@ -438,33 +438,42 @@ void question_And_Answer(string questionAns[][2], string your_answers[], int qa_
 
 
     cout<<"\n\n\n\n\t\t\033[36mYour Score is: \033[0m"<<"\033[36m"<<functionScore<<"\033[0m"<<"\033[36m/10\033[0m\n\n";
-    if(functionScore==10 && !(currentPlayer->l1_finished)){
-        currentPlayer->score+=functionScore;
+    if(functionScore==10 || currentPlayer->l1_finished == 0){
 
-        if(currentPlayer->score==10 && (!currentPlayer->l1_finished)){
+
+
+        if(currentPlayer->score==10 && currentPlayer->l1_finished == 0){
             cout << "\n\t\t\033[33mYou Unlock Lesson 2\033[0m\n";
+            currentPlayer->l1_finished=true;
+            currentPlayer->score+=functionScore;
         }
 
-        currentPlayer->l1_finished=true;
+
         savePlayersToFile();
     }
 
-    else if(functionScore==10 && !(currentPlayer->l2_finished)){
-        currentPlayer->score+=functionScore;
 
-        if(currentPlayer->score==20 && !(currentPlayer->l2_finished)){
+    else if(functionScore==10 && currentPlayer->l2_finished == 0){
+
+
+        if(currentPlayer->score==20 && currentPlayer->l2_finished == 0){
             cout << "\n\t\t\033[33mYou Unlock Lesson 3\033[0m\n";
+            currentPlayer->l2_finished=true;
+            currentPlayer->score+=functionScore;
+
         }
-        currentPlayer->l2_finished=true;
+
         savePlayersToFile();
     }
 
-    else if(functionScore==10 && !(currentPlayer->l3_finished)){
-        currentPlayer->score+=functionScore;
-        if(currentPlayer->score==30 && !(currentPlayer->l3_finished)){
+    else if(functionScore==10 && currentPlayer->l3_finished == 0){
+
+
+        if(currentPlayer->score==30 && currentPlayer->l3_finished == 1){
+            currentPlayer->l3_finished=true;
             system("cls");
             cout<<"\n\n\n\n\n\n\t\t\033[33mYOU HAVE COMPLETED THIS COURSE\033[0m\n\n\t\t      \033[36mCONGRATS!!!!\033[0m\n";
-            currentPlayer->l3_finished=true;
+
             savePlayersToFile();
         }
     }
@@ -684,7 +693,8 @@ void initializeGame(Player* currentPlayer ){
                     cout << "\n\n\t\t\033[33mAttain a perfect score in lesson 1 to access this lesson\033[0m\n\n\t\t";
                     do{
                         cout << "\n\t\t\033[32mPress 1 to exit: \033[0m";
-                        cin >> res;
+                        getline(cin, res);
+                        res.erase(remove(res.begin(), res.end(), ' '), res.end());
                 }while(res!="1");
                 break;
                 }
@@ -700,7 +710,8 @@ void initializeGame(Player* currentPlayer ){
                     cout << "\n\n\t\t\033[33mAttain a perfect score in lesson 2 to access this lesson\033[0m\n\n\t\t";
                     do{
                         cout << "\n\t\t\033[32mPress 1 to exit: \033[0m";
-                        cin >> res;
+                        getline(cin, res);
+                        res.erase(remove(res.begin(), res.end(), ' '), res.end());
                 }while(res!="1");
                 break;
                 }
@@ -715,7 +726,8 @@ void initializeGame(Player* currentPlayer ){
                 cout << "\n\t\t\033[31mInvalid Choice\033[0m";
                     do{
                     cout << "\n\t\t\033[32mPress 1 to exit: \033[0m";
-                    cin >> res;
+                    getline(cin, res);
+                    res.erase(remove(res.begin(), res.end(), ' '), res.end());
                 }while(res!="1");
                 break;
             }
