@@ -25,8 +25,8 @@ string chooseLesson(Player *currentPlayer);
 void basicConcepts(Player* currentPlayer );
 void conditionals(Player* currentPlayer );
 void loopings(Player* currentPlayer );
-void lecture_or_quiz(string lectures[][5], int lectureRowLen, int lectureColLen, string questionAns[0][2], string your_answers[], int qa_Row_Len, int anslength, Player* currentPlayer ,string lessonName);
-void question_And_Answer(string questionAns[][2], string your_answers[], int qa_Row_Len, int anslength, Player* currentPlayer );
+void lecture_or_quiz(string lectures[][5], int lectureRowLen, int lectureColLen, string questionAns[0][2], string your_answers[], int qa_Row_Len, int anslength, int* score, bool* isfinished ,string lessonName);
+void question_And_Answer(string questionAns[][2], string your_answers[], int qa_Row_Len, int anslength, int* score, bool* isfinished );
 void show_lectures(string lectures[][5], int lectureRowLen, int lectureColLen,string lessonName);
 void initializeGame(Player* currentPlayer);
 void shuffle_array(string arr[10][2], int n);
@@ -196,7 +196,7 @@ int main() {
         int anslength=sizeof(your_answers)/sizeof(your_answers[0]);
 
         //INVOKE LECTURE OR QUIZ FUNCTION
-        lecture_or_quiz(lectures,  lectureRowLen,  lectureColLen, questionAns, your_answers, qa_Row_Len, anslength, currentPlayer, LessonName);
+        lecture_or_quiz(lectures,  lectureRowLen,  lectureColLen, questionAns, your_answers, qa_Row_Len, anslength, &currentPlayer->score, &currentPlayer->l1_finished , LessonName);
 
 
     }
@@ -279,7 +279,7 @@ int main() {
 
 
         //INVOKE LECTURE OR QUIZ FUNCTION
-        lecture_or_quiz(lectures,  lectureRowLen,  lectureColLen, questionAns, your_answers, qa_Row_Len, anslength,currentPlayer , LessonName);
+        lecture_or_quiz(lectures,  lectureRowLen,  lectureColLen, questionAns, your_answers, qa_Row_Len, anslength, &currentPlayer->score,&currentPlayer->l2_finished  , LessonName);
 
 }
 
@@ -346,12 +346,12 @@ void loopings(Player* currentPlayer){
         int anslength=sizeof(your_answers)/sizeof(your_answers[0]);
 
         //INVOKE LECTURE OR QUIZ FUNCTION
-        lecture_or_quiz(lectures,  lectureRowLen,  lectureColLen, questionAns, your_answers, qa_Row_Len, anslength, currentPlayer , LessonName);
+        lecture_or_quiz(lectures,  lectureRowLen,  lectureColLen, questionAns, your_answers, qa_Row_Len, anslength, &currentPlayer->score,&currentPlayer->l3_finished , LessonName);
 
 }
 
 
-void lecture_or_quiz(string lectures[][5], int lectureRowLen, int lectureColLen, string questionAns[0][2], string your_answers[], int qa_Row_Len, int anslength, Player* currentPlayer , string lessonName){
+void lecture_or_quiz(string lectures[][5], int lectureRowLen, int lectureColLen, string questionAns[0][2], string your_answers[], int qa_Row_Len, int anslength, int* score, bool* isfinished , string lessonName){
 
 string yes_no;
 
@@ -368,7 +368,7 @@ string yes_no;
 
             else if(yes_no=="2"){
                 system("cls");
-                question_And_Answer(questionAns, your_answers, qa_Row_Len, anslength, currentPlayer );
+                question_And_Answer(questionAns, your_answers, qa_Row_Len, anslength, score, isfinished);
             }
 
             else{
@@ -378,7 +378,7 @@ string yes_no;
 
 }
 
-void question_And_Answer(string questionAns[][2], string your_answers[], int qa_Row_Len, int anslength, Player* currentPlayer) {
+void question_And_Answer(string questionAns[][2], string your_answers[], int qa_Row_Len, int anslength, int* score, bool* isfinished) {
     string res;
     int functionScore=0;
     string reset;
@@ -438,45 +438,27 @@ void question_And_Answer(string questionAns[][2], string your_answers[], int qa_
 
 
     cout<<"\n\n\n\n\t\t\033[36mYour Score is: \033[0m"<<"\033[36m"<<functionScore<<"\033[0m"<<"\033[36m/10\033[0m\n\n";
-    if(functionScore==10 || currentPlayer->l1_finished == 0){
-
-
-
-        if(currentPlayer->score==10 && currentPlayer->l1_finished == 0){
+    if(functionScore==10){
+        if(*isfinished == 0){
+            *score+=functionScore;
+        }
+           if(*score==10 && !(*isfinished)){
             cout << "\n\t\t\033[33mYou Unlock Lesson 2\033[0m\n";
-            currentPlayer->l1_finished=true;
-            currentPlayer->score+=functionScore;
-        }
+            }
 
-
-        savePlayersToFile();
-    }
-
-
-    else if(functionScore==10 && currentPlayer->l2_finished == 0){
-
-
-        if(currentPlayer->score==20 && currentPlayer->l2_finished == 0){
+        else if(*score==20 && !(*isfinished)){
             cout << "\n\t\t\033[33mYou Unlock Lesson 3\033[0m\n";
-            currentPlayer->l2_finished=true;
-            currentPlayer->score+=functionScore;
 
         }
 
-        savePlayersToFile();
-    }
-
-    else if(functionScore==10 && currentPlayer->l3_finished == 0){
-
-
-        if(currentPlayer->score==30 && currentPlayer->l3_finished == 1){
-            currentPlayer->l3_finished=true;
+        else if(*score==30 && !(*isfinished)){
             system("cls");
             cout<<"\n\n\n\n\n\n\t\t\033[33mYOU HAVE COMPLETED THIS COURSE\033[0m\n\n\t\t      \033[36mCONGRATS!!!!\033[0m\n";
-
-            savePlayersToFile();
         }
+        *isfinished=true;
+        savePlayersToFile();
     }
+
 
     do{
         cout<<"\n\n\t\t\033[32mPress 1 to exit\033[0m\n\n\t\t";
@@ -745,4 +727,3 @@ void shuffle_array(string arr[10][2], int n) {
     shuffle(arr, arr + n, default_random_engine(seed));
 
 }
-
